@@ -12,7 +12,7 @@ import {
     FormMessage,
   } from "@/components/ui/form"
   import { Input } from "@/components/ui/input"
-  import { Loader2 } from "lucide-react"
+  import { Loader2  , Trash2 } from "lucide-react"
   import { Button } from "@/components/ui/button"
   import {
     AlertDialog,
@@ -45,13 +45,17 @@ const formSchema = z.object({
   serviceName: z.string().min(2, {
     message: "Service Name must be at least 2 characters.",
   }),
-  servicePrice: z.string(),
+  servicePoints: z.array(z.string()),
   serviceDescription: z.string().min(15, {
     message: "Service Name must be at least 15 characters.",
   }),
   serviceImage: z
   .custom<File>((file) => file instanceof File, {
-    message: "Image is required.",
+    message: "Service Image is required.",
+  }),
+  serviceBanner: z
+  .custom<File>((file) => file instanceof File, {
+    message: "Service Banner Image is required.",
   })
 
 })
@@ -71,12 +75,21 @@ function AddServiceModal( {isopen , onClose , onSubmit}: AddServiceModalProps) {
         },
         mode: "onTouched"
     })
-    const {isSubmitting} = form.formState
+    const {isSubmitting} = form.formState 
+
+    const [pointInput, setPointInput] = React.useState("");
+    const [points, setPoints] = React.useState<string[]>([]);
+
+    React.useEffect(() => {
+      form.setValue("servicePoints", points);
+    }, [points, form]);
 
     const handleSubmitButton = (values: z.infer<typeof formSchema>) => {
-        onSubmit(values)
-        
-      }
+        onSubmit(values)         
+    }
+
+    console.log(points);
+    
 
   return (
 
@@ -84,7 +97,7 @@ function AddServiceModal( {isopen , onClose , onSubmit}: AddServiceModalProps) {
     <AlertDialog open={isopen} onOpenChange={onClose}>
     <AlertDialogTrigger asChild>
     </AlertDialogTrigger>
-    <AlertDialogContent>
+    <AlertDialogContent className="max-h-[90vh] overflow-y-auto">
       <AlertDialogHeader>
         <AlertDialogTitle className={`${inter.className} `} >Create a new service?</AlertDialogTitle>
         <AlertDialogDescription>
@@ -104,19 +117,7 @@ function AddServiceModal( {isopen , onClose , onSubmit}: AddServiceModalProps) {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="servicePrice"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={`${roboto.className} text-black `} >Service Price</FormLabel>
-                  <FormControl>
-                    <Input  {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <FormField
               control={form.control}
               name="serviceDescription"
@@ -130,12 +131,74 @@ function AddServiceModal( {isopen , onClose , onSubmit}: AddServiceModalProps) {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="servicePoints"
+              render={({ }) => (
+                <FormItem>
+                  <FormLabel className={`${roboto.className} text-black `} >Service Points</FormLabel>
+                  <FormControl>
+                    <div className="flex w-full max-w-sm items-center space-x-2">
+                    <Input
+                        value={pointInput}
+                        onChange={(e) => setPointInput(e.target.value)}
+                      />
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          if (pointInput.trim()) {
+                            setPoints([...points, pointInput.trim()]);
+                            setPointInput("");
+                          }
+                        }}
+                      >
+                        Add Point
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+                <ul className="mt-2 space-y-1">
+                  {points.map((point, idx) => (
+                    <li key={idx} className="flex justify-between items-center border p-2 rounded">
+                      <span>{point}</span>
+                      <Trash2
+                        className="w-4 h-4 text-red-500 cursor-pointer"
+                        onClick={() => {
+                          setPoints(prev => prev.filter((_, i) => i !== idx));
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+
+
             <FormField
               control={form.control}  
               name="serviceImage"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className={`${roboto.className} text-black `} >Service Image</FormLabel>
+                  <FormControl>
+                    <Input type="file" accept="image/*"  
+                    onChange={(e) => {
+                      field.onChange(e.target.files?.[0]);
+                    }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}  
+              name="serviceBanner"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className={`${roboto.className} text-black `} >Service Banner Image</FormLabel>
                   <FormControl>
                     <Input type="file" accept="image/*"  
                     onChange={(e) => {

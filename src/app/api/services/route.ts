@@ -14,8 +14,15 @@ export async function POST(request:NextRequest) {
             const formData = await request.formData();
             const serviceName = formData.get('serviceName')
             const serviceDescription = formData.get('serviceDescription')
-            const servicePrice = formData.get('servicePrice')
-            const serviceImage = formData.get('serviceImage') as File
+            const servicePointsReq  = formData.get('servicePoints')
+            console.log(typeof servicePointsReq) 
+            let servicePoints: string[] = [];
+            if(typeof servicePointsReq  === 'string'){
+                servicePoints = JSON.parse(servicePointsReq)
+            }
+            const serviceImage = formData.get('serviceImage') as File 
+            
+            const serviceBanner = formData.get('serviceBanner') as File
             const serviceNameTaken = await Service.findOne({serviceName:serviceName})  
             if(!serviceName){
                 return NextResponse.json({
@@ -31,6 +38,20 @@ export async function POST(request:NextRequest) {
                 })
             }
 
+            if(!servicePoints){
+                return NextResponse.json({
+                    message:"Service Points is Required"
+                },{
+                   status:400 
+                })
+            }else if(servicePoints.length < 5){
+                return NextResponse.json({
+                    message:"Service Points Must be 5 Points"
+                },{
+                   status:400 
+                }) 
+            }
+
             if(!serviceDescription){
                 return NextResponse.json({
                     message:"Service Description is Required"
@@ -38,15 +59,7 @@ export async function POST(request:NextRequest) {
                     status:400
                 })
             }
-
-            if(!servicePrice){
-                return NextResponse.json({
-                    message:"Service Price is Required"
-                },{
-                    status:400
-                })
-            }
-
+            
             if(!serviceImage){
                 return NextResponse.json({
                     message:"Service Image is Required"
@@ -54,24 +67,43 @@ export async function POST(request:NextRequest) {
                     status:400
                 })
             }
+
+            if(!serviceBanner){
+                return NextResponse.json({
+                    message:"Service Banner Image is Required"
+                },{
+                    status:400
+                })   
+            }
+
             const fileBuffer = await serviceImage.arrayBuffer();
-            const mimeType = serviceImage.type;
+            const fileBufferBanner = await serviceBanner.arrayBuffer();
+            const mimeType = serviceImage.type; 
+            const mimeTypeBanner = serviceBanner.type;
             const encoding = "base64";
             const base64Data = Buffer.from(fileBuffer).toString("base64");
+            const base64DataBanner = Buffer.from(fileBufferBanner).toString("base64");
             const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
+            const fileUriBanner = "data:" + mimeTypeBanner + ";" + encoding + "," + base64DataBanner;
             const response = await uploadToCloudinary(fileUri , serviceImage.name)
-            if (response.status == 201 && response.response.secure_url){
+            const responseBanner = await uploadToCloudinary(fileUriBanner , serviceBanner.name)
+            if (response.status == 201 && response.response.secure_url && responseBanner.status == 201){
                 const newServiceSchema = await new Service({
                     serviceName,
                     serviceDescription,
-                    servicePrice,
                     serviceImage:{
                         url:response.response.secure_url,
                         public_id:response.response.public_id
                     },
+                    servicePoints,
+                    serviceBanner:{
+                        url:responseBanner.response.secure_url,
+                        public_id:responseBanner.response.public_id
+                    },
                     isActive:true
                 })
                 newServiceSchema.save()
+                console.log(newServiceSchema)
                 return NextResponse.json({
                     message:"Successfully Added Service",
                     data:newServiceSchema
@@ -122,9 +154,11 @@ export async function DELETE(request:NextRequest) {
         const id = await request.nextUrl.searchParams.get("id")
         const service = await Service.findById({_id : id})
         const public_id = service.serviceImage.public_id;
-        if(public_id){
+        const public_idBanner = service.serviceBanner.public_id;
+        if(public_id && public_idBanner){
             const response = await DeleteImageCloudinary(public_id)
-            if(response && response.status === 1){
+            const responseBanner = await DeleteImageCloudinary(public_idBanner)
+            if(response && response.status === 1 && responseBanner.status === 1){
                 await Service.deleteOne({_id : id})
                 return NextResponse.json({
                     message:"Successfully Deleted Service"

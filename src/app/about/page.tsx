@@ -34,20 +34,13 @@ export default function About() {
         {/* Text Content */}
         <div className="flex flex-col justify-between rounded-md flex-1 mb-10 sm:mb-0">
           <div className="flex flex-col gap-5">
-            <p className="text-lg font-semibold">How it starts</p>
+            <p className="text-lg font-semibold">About Us</p>
             <h1 className="text-4xl sm:text-6xl font-bold mb-4 transition-transform duration-300 hover:translate-x-1">
-              Our Dream is Global Expanding Our Dream is Global Expanding
+              Atheko Premium Laundry is a flagship brand under Collective Core Venture LLP
             </h1>
           </div>
-          <p className="mt-4 text-sm sm:text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde porro
-            atque ratione. Sapiente veniam possimus cum reiciendis eos illum,
-            saepe deserunt, ut eius ea aliquid necessitatibus quas fuga, quaerat
-            accusantium. Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Unde porro atque ratione. Sapiente veniam possimus cum
-            reiciendis eos illum, saepe deserunt, ut eius ea aliquid
-            necessitatibus quas fuga, quaerat accusantium.
-          </p>
+          <p className="mt-4 text-sm sm:text-base" >Atheko Premium Laundry is a flagship brand under Collective Core Venture LLP, built with a vision to redefine modern fabric care through precision, professionalism, and sustainability.</p>
+          <p className="mt-4 text-sm sm:text-base" >At Atheko, we believe laundry is not just a service it s a commitment to quality. We combine state-of-the-art technology, premium products, and skilled handling to ensure your garments receive the care they deserve. Whether it’s everyday clothing, delicate fabrics, or luxury wear, our team ensures each piece is treated with the highest standards of hygiene and attention.</p>
         </div>
 
         {/* Photo and Overview */}
@@ -55,7 +48,7 @@ export default function About() {
           <div className="flex flex-col items-center w-full">
             <div className="mb-4">
               <Image
-                src={"/about/about.jpg"}
+                src="https://res.cloudinary.com/dzvxebtnl/image/upload/v1746549560/atheko/about_us_gdgnxe.jpg"
                 alt="About Us"
                 width={500}
                 height={500}

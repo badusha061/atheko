@@ -23,9 +23,13 @@ export interface Service{
         url:string,
         public_id:string
     },
+    serviceBanner:{
+      url:string,
+      public_id:string
+    },  
     _id:string,
     serviceName:string,
-    servicePrice:number,
+    servicePoints:string[],
     serviceDescription:string,
     created_at:string,
     isActive:boolean,
@@ -50,13 +54,6 @@ export const columns = ({onDelete , onEdit}: ServiceColumnProps) : ColumnDef<Ser
     cell :  ({row}) => <div className={`${roboto.className}`} >{row.original.serviceName}</div>
   },
   {
-    accessorKey: "servicePrice", 
-    header: () => <div className={`${inter.className}   font-extrabold  text-black `} >
-                    Service Price
-                </div>,
-    cell :  ({row}) => <div className={`${roboto.className}`} >{row.original.servicePrice}</div>
-  },
-  {
     accessorKey: "serviceDescription", 
     header: () => <div className={`${inter.className}   font-extrabold  text-black `} >
                     Service Description
@@ -74,6 +71,24 @@ export const columns = ({onDelete , onEdit}: ServiceColumnProps) : ColumnDef<Ser
         <Image
           src={imageUrl}
           alt="Service"
+          width={48} 
+          height={48} 
+          className="rounded object-cover"
+        />
+      );
+    },
+  },
+    {
+    accessorKey: "serviceBanner",
+    header: () => <div className={`${inter.className}   font-extrabold  text-black `} >
+                    Service Banner
+                  </div>,
+    cell: ({ row }) => {
+      const imageUrl = row.original.serviceBanner.url; 
+      return (
+        <Image
+          src={imageUrl}
+          alt="Service Banner"
           width={48} 
           height={48} 
           className="rounded object-cover"

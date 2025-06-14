@@ -1,6 +1,6 @@
 'use client'
 
-import { BookCopy, Home, HandPlatter, Contact, BookImage ,Star} from "lucide-react"
+import { BookCopy, Home, HandPlatter, Contact,Star} from "lucide-react"
 import Link from 'next/link'
 import {
   Sidebar,
@@ -54,11 +54,6 @@ const items = [
     title: "Reviews",
     url: "/admin/reviews",
     icon: Star,
-  },
-  {
-    title: "Banners",
-    url: "/admin/banner",
-    icon: BookImage,
   }
 ]
 

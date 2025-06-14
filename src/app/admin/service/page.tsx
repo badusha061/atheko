@@ -29,20 +29,19 @@ const inter = Inter({
 export default  function AdminServicePage() {
 
     const [datas , setData] = useState<Service[]>([]);
-    const [loading , setLoading] =useState<boolean>(false)
     const [isopen , setIsopen] = useState(false)
     const[editIsOpen , setEditIsOpen] = useState(false)
     const [deleteOpen , setDeleteOpen] = useState(false)
     const [serviceId , setServiceid] = useState("")
     const [editserviceName , setServiceName]  = useState("")
-    const [editservicePrice , setServicePrice]  = useState(0)
+    const [editservicePoints , servicePoints]  = useState([])
     const [editserviceDescription , setServiceDescription]  = useState("")
     const [editserviceImage , setServiceImage]  = useState("")
+    const [editserviceBanner , setServiceBanner]  = useState("")
 
 
 
     useEffect(() => {
-        setLoading(true)
         const getFetch = async () => {
             try{
                 const response = await axios.get('/api/services/')
@@ -54,21 +53,19 @@ export default  function AdminServicePage() {
             }
         }
         getFetch()
-        setLoading(false)
     },[])
 
 
 
     
     const handleSubmit = async (values: Service_) => {
-        try{
+        try{            
           const formData = new FormData()
           formData.append("serviceName",values.serviceName)
-          formData.append("servicePrice",values.servicePrice)
+          formData.append("servicePoints",JSON.stringify(values.servicePoints))
           formData.append("serviceDescription",values.serviceDescription)
           formData.append("serviceImage",values.serviceImage)
-          console.log(typeof values.serviceImage);
-          console.log(values.serviceImage);
+          formData.append("serviceBanner",values.serviceBanner)
           const response = await axios.post(`/api/services/`,formData,{headers: {'Content-Type': 'multipart/form-data'}
           });
           if(response.status === 201){
@@ -77,8 +74,12 @@ export default  function AdminServicePage() {
             setIsopen(false)    
             toast.success("Successfully added a new service")
           }    
-        }catch(error : unknown){
-            toast.error(error.response.data.message)
+        }catch(error : unknown){ 
+            if(error instanceof Error){
+                toast.error(error.message);
+            }else{
+                toast.error("Something Went Wrong Please Try Again.")                            
+            }
         }
     }
 
@@ -88,8 +89,8 @@ export default  function AdminServicePage() {
 
         const formData = new FormData()
         formData.append("serviceName",values.serviceName)
-        if(values.servicePrice){
-            formData.append("servicePrice",values?.servicePrice)
+        if(values.servicePoints){
+            formData.append("servicePoints",JSON.stringify(values?.servicePoints))
         }
         formData.append("serviceDescription",values.serviceDescription)
         if(values.serviceImage &&  typeof values.serviceImage === 'object'){ 
@@ -98,6 +99,13 @@ export default  function AdminServicePage() {
             formData.append("serviceImage",values.serviceImage)
         }else{
             formData.append("serviceImage","")
+        }
+        if(values.serviceBanner &&  typeof values.serviceBanner === 'object'){ 
+            console.log('working');
+            console.log(typeof values.serviceBanner);
+            formData.append("serviceBanner",values.serviceBanner)
+        }else{
+            formData.append("serviceBanner","")
         }
         try{
             const response = await axios.put(`/api/services/${serviceId}`,formData)
@@ -112,7 +120,11 @@ export default  function AdminServicePage() {
                 toast.success("Successfully edited service")
             }
         }catch(error : unknown){
-            toast.error(error.response.data.message)
+            if(error instanceof Error){
+                toast.error(error.message);
+            }else{
+                toast.error("Something Went Wrong Please Try Again.")                            
+            }
         }
         
     }
@@ -131,7 +143,11 @@ export default  function AdminServicePage() {
                     toast.success("Successfully deleted service")
                 }
             }catch(error : unknown){
-                toast.error(error.response.data.message)
+                if(error instanceof Error){
+                    toast.error(error.message);
+                }else{
+                    toast.error("Something Went Wrong Please Try Again.")                            
+                }
             }
     
         }
@@ -144,9 +160,10 @@ export default  function AdminServicePage() {
         if(id && service){
             setServiceid(id)
             setServiceName(service.serviceName)
-            setServicePrice(service.servicePrice)
+            servicePoints(service.servicePoints)
             setServiceDescription(service.serviceDescription)
             setServiceImage(service.serviceImage.url)
+            setServiceBanner(service.serviceBanner.url)
             setEditIsOpen(true)
         }
     }
@@ -195,8 +212,9 @@ export default  function AdminServicePage() {
         onConform={handleEditAPI}
         servicename={editserviceName}
         servicedescription={editserviceDescription}
-        serviceprice={editservicePrice}
+        editservicePoints={editservicePoints}
         serviceimage={editserviceImage}
+        servicebanner={editserviceBanner}
     />  
 
     </div>

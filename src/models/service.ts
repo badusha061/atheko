@@ -7,15 +7,25 @@ const ServiceSchema = new mongoose.Schema({
         required : true ,
         unique : true
     },
-    servicePrice :{
-        type:Number,
-        required : true 
-    },
     serviceDescription :{
         type:String,
         required : true 
     },
     serviceImage :{
+        url:{
+            type:String,
+            required : true 
+        },
+        public_id:{
+            type:String,
+            required : true 
+        }
+    },
+    servicePoints : {
+        type:[String],
+        required:true
+    },
+    serviceBanner :{
         url:{
             type:String,
             required : true 

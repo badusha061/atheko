@@ -40,23 +40,19 @@ export async function PUT(
         const formData = await request.formData();
         const serviceName = formData.get('serviceName')
         const serviceDescription = formData.get('serviceDescription')
-        const servicePrice = formData.get('servicePrice')
+        const servicePoints = formData.get('servicePoints')
         const serviceImage = formData.get('serviceImage') as File;
+        const serviceBanner = formData.get('serviceBanner') as File;
         const service = await  Service.findOne({_id : id})
-        // console.log(service)
-        console.log(servicePrice)
-        console.log(serviceDescription)
-        console.log(serviceImage,'image')
-        console.log(serviceName);
         const service_url = service.serviceImage.url;
         const public_id = service.serviceImage.public_id;
-        console.log(service_url)
-        console.log(public_id);
-        if(!serviceImage){
+        const service_urlBanner = service.serviceBanner.url;
+        const public_idBanner = service.serviceBanner.public_id;
+        if(!serviceImage && !serviceBanner){
             await  Service.updateOne({_id : id},{
                 $set:{
                     serviceName:serviceName,
-                    servicePrice:servicePrice,
+                    servicePoints:servicePoints,
                     serviceDescription:serviceDescription,
                     serviceImage:{
                         url:service_url,
@@ -73,26 +69,36 @@ export async function PUT(
                 status:200
             })   
         }
-        if(public_id && service_url && serviceImage){
+        if(public_id && service_url && serviceImage && serviceBanner && public_idBanner && service_urlBanner){
             const response = await DeleteImageCloudinary(public_id)
+            await DeleteImageCloudinary(public_idBanner)
             if(response && response.status == 1){
                 console.log('worked');
                 const fileBuffer = await serviceImage.arrayBuffer();
+                const fileBufferBanner = await serviceBanner.arrayBuffer();
                 console.log('file buffer',fileBuffer);
                 const mimeType = serviceImage.type;
+                const mimeTypeBanner = serviceBanner.type;
                 const encoding = "base64";
                 const base64Data = Buffer.from(fileBuffer).toString("base64");
+                const base64DataBanner = Buffer.from(fileBufferBanner).toString("base64");
                 const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
+                const fileUriBanner = "data:" + mimeTypeBanner + ";" + encoding + "," + base64DataBanner;
                 const response = await uploadToCloudinary(fileUri , serviceImage.name)
-                if(response && response.status == 201 && response.response.secure_url){
+                const responseBanner = await uploadToCloudinary(fileUriBanner , serviceBanner.name)
+                if(response && response.status == 201 && response.response.secure_url && responseBanner.status == 201){
                     await  Service.updateOne({_id : id},{
                         $set:{
                             serviceName:serviceName,
-                            servicePrice:servicePrice,
+                            servicePoints:servicePoints,
                             serviceDescription:serviceDescription,
                             serviceImage:{
                                 url:response.response.secure_url,
                                 public_id:response.response.public_id
+                            },
+                            serviceBanner:{
+                                url:responseBanner.response.secure_url,
+                                public_id:responseBanner.response.public_id
                             },
                             isActive:true
                         }

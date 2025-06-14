@@ -108,7 +108,7 @@ function LoginPage() {
     </div>
     <div className="hidden bg-muted lg:block">
       <Image
-        src="https://res.cloudinary.com/dzvxebtnl/image/upload/v1746113128/atheko/landing_odk3ir.jpg"
+        src="https://res.cloudinary.com/dzvxebtnl/image/upload/v1746549560/atheko/about_us_gdgnxe.jpg"
         alt="Image"
         width="1920"
         height="1080"

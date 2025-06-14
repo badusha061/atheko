@@ -1,380 +1,64 @@
 "use client";
 
+import { View } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // Correct import for app directory
-import React, { useState } from "react";
+import { useRouter } from "next/navigation"; 
+import React, { useEffect, useState , CSSProperties  } from "react";
+import { Service_ } from "@/types/type";
+import axios from "axios";
+import { FadeLoader  } from "react-spinners";
 
-export type Service = {
-  name: string;
-  image: string;
-  description: string;
-  banner: string;
-  bulletPoints: string[];
+
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "2px auto",
+  borderColor: "black", 
 };
 
 export default function Services() {
   const router = useRouter();
-  const services: Service[] = [
-    {
-      name: "LAUNDRY",
-      image: "/services/icons/LAUNDRY.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "PREMIUM LAUNDRY CARE",
-      image: "/services/icons/LAUNDRY_CARE.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "DRY CLEANING",
-      image: "/services/icons/DRY_CLEAN.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "STEAM IRONING",
-      image: "/services/icons/SRTEAM_IRONING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "WASH & FOLD",
-      image: "/services/icons/WASH_FOLD.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "DELICATE FABRIC HANDLING",
-      image: "/services/icons/DELICATE_FABRIC_HANDLING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "SHOE CLEANING & CARE",
-      image: "/services/icons/SHOE_CLEANING_CARE.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "LINEN & HOME TEXTILE CLEANING",
-      image: "/services/icons/LINEN_HOME_TEXTILE_CLEANING.jpg",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "EXPRESS DELIVERY OPTION",
-      image: "/services/icons/FAST_DELIVERY.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "FABRIC COLORING",
-      image: "/services/icons/FABRIC_COLORING.webp",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "CLOTH POLISHING",
-      image: "/services/icons/CLOTH_POLISHING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "FABRIC SHREDDING",
-      image: "/services/icons/FABRIC_SHREDDING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "LAUNDRY",
-      image: "/services/icons/LAUNDRY.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "PREMIUM LAUNDRY CARE",
-      image: "/services/icons/LAUNDRY_CARE.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "DRY CLEANING",
-      image: "/services/icons/DRY_CLEAN.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "STEAM IRONING",
-      image: "/services/icons/SRTEAM_IRONING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "WASH & FOLD",
-      image: "/services/icons/WASH_FOLD.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "DELICATE FABRIC HANDLING",
-      image: "/services/icons/DELICATE_FABRIC_HANDLING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "SHOE CLEANING & CARE",
-      image: "/services/icons/SHOE_CLEANING_CARE.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "LINEN & HOME TEXTILE CLEANING",
-      image: "/services/icons/LINEN_HOME_TEXTILE_CLEANING.jpg",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "EXPRESS DELIVERY OPTION",
-      image: "/services/icons/FAST_DELIVERY.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "FABRIC COLORING",
-      image: "/services/icons/FABRIC_COLORING.webp",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "CLOTH POLISHING",
-      image: "/services/icons/CLOTH_POLISHING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-    {
-      name: "FABRIC SHREDDING",
-      image: "/services/icons/FABRIC_SHREDDING.png",
-      description:
-        "Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids andbaby wear etc using a cleaning agent other than water.Send Message At laundrology, our experts follow the 5 step safest dry clean techniques, treating each garment individually. If you are searching for the best dry cleaner near you who will exceed your expectations with dry cleaning your favourite outfit, then your search ends here. Dry cleaning is the process of cleaning your designer wear, woolen blazers, silks, sarees with embroidery, stonework, quilts and blankets, mattresses and baby bedding, kids and baby wear etc using a cleaning agent other than water.",
-      banner: "/services/banner/banner.avif",
-      bulletPoints: [
-        "Checking each garment for stain, analysing the type of stain and best case stain removal. This pre-spotting is done prior to cleaning.",
-        "Dry cleaning with organic solvents based on the fabric and colour",
-        "Sanitization to ensure your clothes are shielded from germs and are microbe free.",
-        "Depending on the garment and your personal preference, starch, brightener etc are added",
-        "Form finishing to iron the garments, removing creases and wrinkles safely. We at Laundrology also ensure that no unnecessary and unsightly crease lines are added.",
-      ],
-    },
-  ];
 
   const [visibleServices, setVisibleServices] = useState(9);
+  const [services , setServices] = useState<Service_[]>([]) 
+  const [loading, setLoading] = useState(false); 
+  const colour = '#000000'
 
-  const handleViewMore = () => {
+  const handleViewMore = () => { 
     setVisibleServices(services.length);
   };
 
-  const handleServiceClick = async (service: Service): Promise<void> => {
+  const handleServiceClick = async (service: Service_): Promise<void> => {
     try {
-      // Serialize the service object into a JSON string
       const serviceData = encodeURIComponent(JSON.stringify(service));
-
-      // Create the path with the serialized service data
       const path = `/services/${encodeURIComponent(
-        service.name
+        service.serviceName
       )}?data=${serviceData}`;
-
-      // Navigate to the new path
       await router.push(path);
     } catch (error) {
       console.error("Navigation error:", error);
     }
+
   };
+
+
+    useEffect(() => {
+        const getFetch = async () => { 
+          setLoading(true)
+            try{
+                const response = await axios.get('/api/services/')
+                if(response.status === 200){
+                    setServices(response.data['data']) 
+                }
+            }catch (error : unknown){
+                console.log(error) 
+            }
+          setLoading(false)
+        }
+        getFetch()
+    },[])
+
+
 
   return (
     <section className="h-full flex flex-col justify-start items-center">
@@ -399,9 +83,10 @@ export default function Services() {
           {visibleServices < services.length && (
             <button
               onClick={handleViewMore}
-              className="text-blue-600 rounded-sm px-5 py-2 text-sm md:text-3xl font-bold hover:underline"
+              className=" flex justify-between gap-4 items-center text-blue-600 rounded-sm px-5 py-2 text-sm md:text-3xl font-bold hover:underline"
             >
-              View All
+              View All 
+              <View />
             </button>
           )}
         </div>
@@ -412,17 +97,17 @@ export default function Services() {
             <div
               key={index}
               onClick={() => handleServiceClick(service)}
-              className="flex flex-col justify-center items-center gap-3 md:gap-5 animate-fade-in"
+              className="flex flex-col justify-center  hover:cursor-pointer   items-center gap-3 md:gap-5 animate-fade-in"
             >
               <Image
                 width={100}
                 height={100}
-                src={service.image}
-                alt={service.name}
+                src={service.serviceImage.url}
+                alt={service.serviceName}
                 className="transition-transform duration-300 hover:scale-110"
               />
               <p className="text-sm md:text-2xl font-bold text-center">
-                {service.name}
+                {service.serviceName}
               </p>
             </div>
           ))}
@@ -457,6 +142,16 @@ export default function Services() {
           </div>
         )}
       </div>
+      <FadeLoader
+        color={colour}
+        loading={loading}
+        cssOverride={override}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+        height={15}    
+        width={5}      
+        radius={2}     
+      />
     </section>
   );
 }

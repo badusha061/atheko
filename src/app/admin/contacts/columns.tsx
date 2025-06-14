@@ -78,7 +78,7 @@ export const columns = ({onDelete }: ContactColumnProps) : ColumnDef<Contact>[] 
   {
     id:"actions", 
     header: () => <div className={`${inter.className}   font-extrabold  text-black `} >
-                    Views
+                    Delete
                   </div>,
     cell: ({row})=> <DataTableRowActionsContact row={row} onDelete={onDelete}  />
   },

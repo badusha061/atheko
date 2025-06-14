@@ -5,15 +5,24 @@ import Contact from "@/models/contact";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from 'nodemailer';
 
+export interface ContactFormDataType {
+    fullName : string,
+    email :  string , 
+    number : string,
+    message : string 
+}
+
+
 
 await ConnectMongodb() 
 
 export async  function POST(request:NextRequest) {
     try{
 
-        const {fullName , email  , number , message} = await request.json()
+        const contactForm : ContactFormDataType =    await  request.json();
+        const {fullName  , email , number , message} =  contactForm
         const regex_email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const number_regex = /^\d{10}$/;
+        const number_regex =  /^\+?[1-9]\d{1,14}$/;
         if(!fullName){
             return NextResponse.json({
                 "message":"Full Name is Required"
@@ -149,7 +158,7 @@ export async  function POST(request:NextRequest) {
 }
 
 
-export async function GET(request : NextRequest){
+export async function GET(){
     try{
         const contacts = await Contact.find()
         return NextResponse.json({
@@ -165,4 +174,36 @@ export async function GET(request : NextRequest){
             status:500
         })
     }
+}
+
+
+
+
+export async function DELETE(request:NextRequest) {
+    try{    
+        const id = await request.nextUrl.searchParams.get("id")
+        const contact = await Contact.findById({_id : id}) 
+        if(contact){
+            await Contact.deleteOne({_id : id})
+                return NextResponse.json({
+                    message:"Successfully Deleted Service"
+                },{
+                    status:200
+                })
+        }else{
+            return NextResponse.json({
+            message:"Contact Not Found, Please Try Again Valid Contact"
+        },{
+            status:400
+        })
+        }
+    }catch (err : unknown){
+        const error = err as Error
+        return NextResponse.json({
+            message:error.message
+        },{
+            status:500
+        })
+    }
+    
 }

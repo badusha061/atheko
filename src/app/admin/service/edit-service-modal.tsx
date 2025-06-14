@@ -16,37 +16,54 @@ import Image from 'next/image'
 
   
 export  interface editService {
+  _id : null,
   serviceName : string,
   serviceImage : string | File,
+  serviceBanner : string | File,
   serviceDescription: string,
-  servicePrice:number
+  servicePoints:string[],
+  created_at : null,
+  isActive:null
 }
 
-function EditServiceModal({isopen, onClose , onConform ,  servicename , servicedescription , serviceprice , serviceimage }:
-  {isopen : boolean ; onClose : () => void; onConform : (serviceData : Service) => void;  servicename : string , servicedescription:string , serviceprice : number , serviceimage: File | string }) {
+function EditServiceModal({isopen, onClose , onConform ,  servicename , servicedescription , servicepoints , serviceimage , servicebanner }:
+  {isopen : boolean ; onClose : () => void; onConform : (serviceData : Service) => void;  servicename : string , servicedescription:string , servicepoints : string[] , serviceimage: File | string , servicebanner: File | string }) {
     
 
       const [editserviceName , setServiceName]  = useState(servicename)
-      const [editservicePrice , setServicePrice]  = useState(serviceprice)
+      const [editservicePoints , setServicePoints]  = useState(servicepoints)
       const [editserviceDescription , setServiceDescription]  = useState(servicedescription)
       const [editserviceImage , setServiceImage]  = useState(serviceimage)
+      const [editserviceBanner , setServiceBanner]  = useState(servicebanner)
       const [showeditserviceImage , setShowServiceImage]  = useState(serviceimage)
+      const [showeditserviceBanner , setShowServiceBanner]  = useState(servicebanner)
 
     useEffect(()=> {
       setServiceName(servicename)
       setServiceDescription(servicedescription)
-      setServicePrice(serviceprice)
+      setServicePoints(servicepoints)
       setServiceImage(serviceimage)
+      setServiceBanner(servicebanner)
       setShowServiceImage(serviceimage)
-    },[servicename,serviceprice,servicedescription,serviceimage])
+      setShowServiceBanner(servicebanner)
+    },[servicename,servicepoints,servicedescription,serviceimage , servicebanner])
 
-    const handleFile = (e : React.ChangeEvent<HTMLInputElement>) => {
-      if(e.target.files && e.target.files[0]){
-        const file = e.target.files[0]
-        setServiceImage(file)
-        setShowServiceImage(URL.createObjectURL(file))
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.target;
+    if (files && files[0]) {
+      const file = files[0];
+      const fileURL = URL.createObjectURL(file);
+
+      if (name === "serviceImage") {
+        setServiceImage(file);
+        setShowServiceImage(fileURL);
+      } else if (name === "serviceBanner") {
+        setServiceBanner(file);
+        setShowServiceBanner(fileURL);
       }
     }
+  };
+
 
     const handleSave = () => {
         console.log(typeof editserviceImage);
@@ -55,17 +72,18 @@ function EditServiceModal({isopen, onClose , onConform ,  servicename , serviced
       const serviceData : editService = {
         serviceName : editserviceName,
         serviceDescription : editserviceDescription,
-        servicePrice : editservicePrice,
+        servicePoints : editservicePoints,
         serviceImage : editserviceImage,
+        serviceBanner : editserviceBanner,
       }
       if(serviceData){
         onConform(serviceData)
       }else{
         console.log("null getting")
       }
-
-
     }
+
+    console.log(servicepoints)
 
   return (
     <Dialog open={isopen} onOpenChange={onClose}>
@@ -90,18 +108,6 @@ function EditServiceModal({isopen, onClose , onConform ,  servicename , serviced
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="servicePrice" className="text-right">
-            servicePrice
-          </Label>
-          <Input
-            id="servicePrice"
-            type='number'
-            value={editservicePrice}
-            className="col-span-3"
-            onChange={(e) => setServicePrice(Number(e.target.value))}
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="serviceDescription" className="text-right">
             Description
           </Label>
@@ -121,13 +127,36 @@ function EditServiceModal({isopen, onClose , onConform ,  servicename , serviced
             type="file"
             accept="image/*"  
             id="serviceImage"
+            name="serviceImage"
             className="col-span-2"
             onChange={(e) =>
               handleFile(e)
             }
           />
           <Image  
-          src={showeditserviceImage} 
+          src={showeditserviceImage as string} 
+          width={50}    
+          height={50} 
+          className="rounded object-cover"  
+          alt='service-image' />
+        </div> 
+
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="serviceImage" className="text-right">
+            serviceImage
+          </Label>
+          <Input
+            type="file"
+            accept="image/*"  
+            id="serviceBanner"
+            name="serviceBanner"
+            className="col-span-2"
+            onChange={(e) =>
+              handleFile(e)
+            }
+          />
+          <Image  
+          src={showeditserviceBanner as string} 
           width={50}    
           height={50} 
           className="rounded object-cover"  

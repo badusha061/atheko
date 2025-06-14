@@ -10,9 +10,13 @@ export interface Service_{
         url:string,
         public_id:string
     },
+    serviceBanner:{
+        url:string,
+        public_id:string
+    },
     _id:string,
     serviceName:string,
-    servicePrice:number,
+    servicePoints:string[],
     serviceDescription:string,
     created_at:string,
     isActive:boolean,

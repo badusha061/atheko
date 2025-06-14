@@ -6,6 +6,7 @@ import { DataTable } from "../../../components/data-table"
 import axios from "axios"
 import { useEffect, useMemo, useState } from "react"
 import ContactViewPage from "./contanctViewPage"
+import { toast } from "sonner"
 
 
 async function getData(): Promise<Contact[]> {
@@ -24,7 +25,7 @@ async function getData(): Promise<Contact[]> {
 
 export default  function AdminContactPage() {
     const [data , setData] = useState<Contact[]>([]);
-    const [contact , setContact]  = useState<Contact>([])
+    const [contactId , setContact]  = useState<string>("")
     const [isClick , setIsClick] = useState(false)
     useEffect(() => {
         const loadData = async () => {
@@ -36,14 +37,36 @@ export default  function AdminContactPage() {
 
 
     const onDelete = (row : Contact) => {
-        // console.log(row);
+        const id = row._id;
         if(row){
-            setContact(row)
+            setContact(id)
             setIsClick(true)
         }
     }
     
 
+    const handleDeleteAPI = async (conform : string) => {
+        if(conform === "no"){
+            setIsClick(false)
+            setContact("")
+        }else if (conform === "yes"){
+            try{
+                const response = await axios.delete(`/api/contact?id=${contactId}`)
+                if(response.status === 200){
+                    console.log("usccess")
+                    setData((prev) => prev.filter((data) => data._id !== contactId))
+                    toast.success("Successfully deleted service")
+                }
+            }catch(error : unknown){
+                if(error instanceof Error){
+                    toast.error(error.message);
+                }else{
+                    toast.error("Something Went Wrong Please Try Again.")                            
+                }
+            }
+    
+        }
+    }
 
 
     const columns = useMemo(() => baseColumns({onDelete}),[]);
@@ -53,7 +76,7 @@ export default  function AdminContactPage() {
     <AdminLayout>    
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={data} />
-      <ContactViewPage isopen={isClick} onClose={() => setIsClick(false)} contact={contact} />
+      <ContactViewPage isopen={isClick} onClose={() => setIsClick(false)} onConform={handleDeleteAPI} />
     </div>
     </AdminLayout>
   )
