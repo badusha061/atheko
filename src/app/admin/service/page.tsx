@@ -34,7 +34,7 @@ export default  function AdminServicePage() {
     const [deleteOpen , setDeleteOpen] = useState(false)
     const [serviceId , setServiceid] = useState("")
     const [editserviceName , setServiceName]  = useState("")
-    const [editservicePoints , servicePoints]  = useState([])
+    const [editservicePoints , servicePoints]  = useState([""])
     const [editserviceDescription , setServiceDescription]  = useState("")
     const [editserviceImage , setServiceImage]  = useState("")
     const [editserviceBanner , setServiceBanner]  = useState("")
@@ -55,7 +55,9 @@ export default  function AdminServicePage() {
         getFetch()
     },[])
 
-
+    function isFile(value: unknown): value is File {
+    return value instanceof File;
+    }
 
     
     const handleSubmit = async (values: Service_) => {
@@ -63,9 +65,13 @@ export default  function AdminServicePage() {
           const formData = new FormData()
           formData.append("serviceName",values.serviceName)
           formData.append("servicePoints",JSON.stringify(values.servicePoints))
-          formData.append("serviceDescription",values.serviceDescription)
-          formData.append("serviceImage",values.serviceImage)
-          formData.append("serviceBanner",values.serviceBanner)
+          formData.append("serviceDescription",values.serviceDescription) 
+          if(isFile(values.serviceImage)){
+              formData.append("serviceImage",values.serviceImage)
+          }
+          if(isFile(values.serviceBanner)){
+              formData.append("serviceBanner",values.serviceBanner)
+          }
           const response = await axios.post(`/api/services/`,formData,{headers: {'Content-Type': 'multipart/form-data'}
           });
           if(response.status === 201){
@@ -212,9 +218,10 @@ export default  function AdminServicePage() {
         onConform={handleEditAPI}
         servicename={editserviceName}
         servicedescription={editserviceDescription}
-        editservicePoints={editservicePoints}
+        servicepoints={editservicePoints}
         serviceimage={editserviceImage}
         servicebanner={editserviceBanner}
+        serviceId={serviceId}
     />  
 
     </div>

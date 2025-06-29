@@ -3,12 +3,12 @@
 import TitleSection from "./widgets/CommonTitle";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { Service_ } from "@/types/type";
+import { ServiceUI } from "@/types/type";
 import axios from "axios";
 
 
 export default function OurService() {
-  const [services , setServices] = useState<Service_[]>([])
+  const [services , setServices] = useState<ServiceUI[]>([])
 
 
 

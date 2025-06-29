@@ -4,7 +4,7 @@ import { View } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation"; 
 import React, { useEffect, useState , CSSProperties  } from "react";
-import { Service_ } from "@/types/type";
+import { ServiceUI } from "@/types/type";
 import axios from "axios";
 import { FadeLoader  } from "react-spinners";
 
@@ -20,7 +20,7 @@ export default function Services() {
   const router = useRouter();
 
   const [visibleServices, setVisibleServices] = useState(9);
-  const [services , setServices] = useState<Service_[]>([]) 
+  const [services , setServices] = useState<ServiceUI[]>([]) 
   const [loading, setLoading] = useState(false); 
   const colour = '#000000'
 
@@ -28,7 +28,7 @@ export default function Services() {
     setVisibleServices(services.length);
   };
 
-  const handleServiceClick = async (service: Service_): Promise<void> => {
+  const handleServiceClick = async (service: ServiceUI): Promise<void> => {
     try {
       const serviceData = encodeURIComponent(JSON.stringify(service));
       const path = `/services/${encodeURIComponent(

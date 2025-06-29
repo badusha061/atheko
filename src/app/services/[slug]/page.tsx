@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import React from "react";
-import { Service_ } from "@/types/type";
+import { ServiceUI } from "@/types/type";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -81,7 +81,7 @@ export default function ServiceDetailPage() {
   const searchParams = useSearchParams();
   const data = searchParams.get("data");
 
-  let service: Service_ | null = null;
+  let service: ServiceUI | null = null;
 
   if (data) {
     try {
@@ -107,7 +107,7 @@ export default function ServiceDetailPage() {
       {service && (
         <div className="relative h-[40vh] w-full rounded-md overflow-hidden md:h-[50vh] transition-transform transform hover:scale-105 duration-300 ease-in-out">
           <Image
-            src={service.serviceBanner.url || ""}
+            src={service.serviceBanner.url  || ""}
             alt="Service Image"
             fill
             className="rounded-2xl object-cover"

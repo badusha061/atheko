@@ -6,6 +6,17 @@ export interface User{
 
 
 export interface Service_{
+    serviceImage:File,
+    serviceBanner:File,
+    _id?:string | null,
+    serviceName:string,
+    servicePoints:string[],
+    serviceDescription:string,
+    created_at?:string | null,
+    isActive?:boolean | null,
+}
+
+export interface ServiceUI{
     serviceImage:{
         url:string,
         public_id:string
@@ -14,12 +25,12 @@ export interface Service_{
         url:string,
         public_id:string
     },
-    _id:string,
+    _id?:string | null,
     serviceName:string,
     servicePoints:string[],
     serviceDescription:string,
-    created_at:string,
-    isActive:boolean,
+    created_at?:string | null,
+    isActive?:boolean | null,
 }
 
 export interface DeleteModalProp{

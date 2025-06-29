@@ -11,25 +11,29 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Service } from './columns'
+// import { Service } from './columns'
 import Image from 'next/image'
 
   
 export  interface editService {
-  _id : null,
+  _id : string | null,
   serviceName : string,
   serviceImage : string | File,
   serviceBanner : string | File,
   serviceDescription: string,
   servicePoints:string[],
-  created_at : null,
-  isActive:null
+  created_at? : string | null,
+  isActive?: string | null
 }
 
-function EditServiceModal({isopen, onClose , onConform ,  servicename , servicedescription , servicepoints , serviceimage , servicebanner }:
-  {isopen : boolean ; onClose : () => void; onConform : (serviceData : Service) => void;  servicename : string , servicedescription:string , servicepoints : string[] , serviceimage: File | string , servicebanner: File | string }) {
+function EditServiceModal({isopen, onClose , onConform ,  servicename , servicedescription , servicepoints , serviceimage , servicebanner , serviceId }:
+  {isopen : boolean ; onClose : () => void; onConform : (serviceData : editService) => void;  servicename : string , servicedescription:string , servicepoints : string[] , serviceimage: File | string , servicebanner: File | string , serviceId:  string }) 
+  {
     
 
+      const [editservice_id , setServiceId]  = useState(serviceId)
+      // const [editservicecreated , setServiceCreatedAt]  = useState(servicename)
+      // const [editserviceIsActive , setServiceIsActive]  = useState(servicename)
       const [editserviceName , setServiceName]  = useState(servicename)
       const [editservicePoints , setServicePoints]  = useState(servicepoints)
       const [editserviceDescription , setServiceDescription]  = useState(servicedescription)
@@ -39,6 +43,7 @@ function EditServiceModal({isopen, onClose , onConform ,  servicename , serviced
       const [showeditserviceBanner , setShowServiceBanner]  = useState(servicebanner)
 
     useEffect(()=> {
+      setServiceId(serviceId)
       setServiceName(servicename)
       setServiceDescription(servicedescription)
       setServicePoints(servicepoints)
@@ -46,7 +51,7 @@ function EditServiceModal({isopen, onClose , onConform ,  servicename , serviced
       setServiceBanner(servicebanner)
       setShowServiceImage(serviceimage)
       setShowServiceBanner(servicebanner)
-    },[servicename,servicepoints,servicedescription,serviceimage , servicebanner])
+    },[servicename,servicepoints,servicedescription,serviceimage , servicebanner , serviceId])
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
@@ -69,7 +74,8 @@ function EditServiceModal({isopen, onClose , onConform ,  servicename , serviced
         console.log(typeof editserviceImage);
         console.log(editserviceImage);
         
-      const serviceData : editService = {
+      const serviceData : editService = { 
+        _id:editservice_id,
         serviceName : editserviceName,
         serviceDescription : editserviceDescription,
         servicePoints : editservicePoints,
@@ -77,7 +83,7 @@ function EditServiceModal({isopen, onClose , onConform ,  servicename , serviced
         serviceBanner : editserviceBanner,
       }
       if(serviceData){
-        onConform(serviceData)
+        onConform(serviceData as unknown as editService)
       }else{
         console.log("null getting")
       }

@@ -24,7 +24,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-
+  import { Service_ } from "@/types/type"
+  
   import { z } from "zod"
   import { Roboto  , Inter} from 'next/font/google';
 
@@ -63,7 +64,7 @@ const formSchema = z.object({
 interface AddServiceModalProps {
   isopen: boolean; 
   onClose: () => void; 
-  onSubmit: (data: unknown) => void; 
+  onSubmit: (data: Service_) => void; 
 }
 
 function AddServiceModal( {isopen , onClose , onSubmit}: AddServiceModalProps) {
@@ -88,7 +89,7 @@ function AddServiceModal( {isopen , onClose , onSubmit}: AddServiceModalProps) {
         onSubmit(values)         
     }
 
-    console.log(points);
+    // console.log(points);
     
 
   return (

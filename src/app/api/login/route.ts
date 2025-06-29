@@ -32,22 +32,30 @@ export async function POST(request: NextRequest){
             password:process.env.PASSWORD!
         }
 
-        const tokan = await jwt.sign(
-            tokanData,
-            process.env.SECRET_KEY,
-            { expiresIn: '5d' }
-        )        
-        const response = NextResponse.json({
-            message:"Successfully Login Admin",
-            success:true
-        },{
-            status:200
-        })
-        response.cookies.set("token" , tokan ,{
-            httpOnly:true
-        })
-        return response
+        if(process.env.SECRET_KEY){
 
+            const tokan = await jwt.sign(
+                tokanData,
+                process.env.SECRET_KEY,
+                { expiresIn: '5d' }
+            )        
+            const response = NextResponse.json({
+                message:"Successfully Login Admin",
+                success:true
+            },{
+                status:200
+            })
+            response.cookies.set("token" , tokan ,{
+                httpOnly:true
+            })
+            return response
+        }else{
+            return NextResponse.json({
+                message:"Something Went Wrong"
+            },{
+                status:500
+            })
+        }
     }catch (err : unknown ){
         const error = err as Error
         return NextResponse.json({

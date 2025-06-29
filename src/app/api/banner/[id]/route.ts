@@ -61,6 +61,11 @@ export async function PUT(
                 const base64Data = Buffer.from(fileBuffer).toString("base64");
                 const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
                 const response = await uploadToCloudinary(fileUri , bannerImage.name)
+                if (response instanceof  NextResponse){
+                    const errorData = await response.json();
+                    console.error("Upload failed:", errorData.message);
+                    return;
+                }
                 if(response && response.status == 201 && response.response.secure_url){
                     await  Banner.updateOne({_id : id},{
                         $set:{
