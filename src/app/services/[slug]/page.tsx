@@ -6,7 +6,6 @@ import React from "react";
 import { ServiceUI } from "@/types/type";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -30,15 +29,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import libphonenumber from "google-libphonenumber"; 
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { CalendarField } from "@/components/calender/calender-field";
 
 
 const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
@@ -62,45 +53,52 @@ const formSchema = z.object({
                 }
             }),
   place: z.string().min(5).max(50),
-  bookdate: z.date({
-    required_error: "Booking date is required.",
+  scheduledDate: z.date({
+    required_error: "A date of birth is required.",
   }),
+  scheduledTime :z
+    .string({
+      required_error: "Time is required",
+    })
+    .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+      message: "Time must be in HH:mm format",
+    }),
       
 })
 
 
 
 export default function ServiceDetailPage() {
-  const relatedServices = [
-    { id: 1, title: "Service 1" },
-    { id: 2, title: "Service 2" },
-    { id: 3, title: "Service 3" },
-    { id: 4, title: "Service 4" },
-  ];
+    const relatedServices = [
+      { id: 1, title: "Service 1" },
+      { id: 2, title: "Service 2" },
+      { id: 3, title: "Service 3" },
+      { id: 4, title: "Service 4" },
+    ];
 
-  const searchParams = useSearchParams();
-  const data = searchParams.get("data");
+    const searchParams = useSearchParams();
+    const data = searchParams.get("data");
 
-  let service: ServiceUI | null = null;
+    let service: ServiceUI | null = null;
 
-  if (data) {
-    try {
-      service = JSON.parse(decodeURIComponent(data));
-    } catch (error) {
-      console.error("Error parsing service data:", error);
+    if (data) {
+      try {
+        service = JSON.parse(decodeURIComponent(data));
+      } catch (error) {
+        console.error("Error parsing service data:", error);
+      }
     }
-  }
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
-  })
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        username: "",
+      },
+    })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-      console.log(values)
-  }
+    function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log(values)
+    }
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-5 md:p-10">
@@ -113,11 +111,11 @@ export default function ServiceDetailPage() {
             className="rounded-2xl object-cover"
           />
          <AlertDialog>
-  <AlertDialogTrigger asChild>
-    <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-blue-600 transition duration-200">
-      Schedule Pick Up
-    </Button>
-  </AlertDialogTrigger>
+    <AlertDialogTrigger asChild>
+      <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-blue-600 transition duration-200">
+        Schedule Pick Up
+      </Button>
+    </AlertDialogTrigger>
 
   <AlertDialogContent className="max-h-[80vh] overflow-y-auto" >
     <AlertDialogHeader>
@@ -184,49 +182,45 @@ export default function ServiceDetailPage() {
                         <FormDescription>This is your place of residence.</FormDescription>
                         <FormMessage />
                       </FormItem>
+                    )}  
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="scheduledDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <CalendarField value={field.value} onChange={field.onChange} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
                   />
 
-<FormField
-  control={form.control}
-  name="bookdate"
-  render={({ field }) => (
-    <FormItem className="flex flex-col">
-      <FormLabel>Booking Date</FormLabel>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className={cn(
-              "w-[240px] pl-3 text-left font-normal",
-              !field.value && "text-muted-foreground"
-            )}
-          >
-            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={field.value}
-            onSelect={field.onChange}
-            disabled={(date) => date < new Date()}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
-      <FormDescription>Select a suitable date for your pickup.</FormDescription>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+                  <FormField
+                    control={form.control}
+                    name="scheduledTime"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Schedule Time</FormLabel>
+                        <FormControl>
+                          <Input type="time" placeholder="eg: 12:00 AM" {...field} />
+                        </FormControl>
+                        <FormDescription>This is your place of residence.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}  
+                  />
+
+                  
+
 
 
 
 
             <div className="flex justify-end">
-              <Button type="submit">Submit</Button>
+              <Button className="w-full" type="submit">Submit</Button>
             </div>
           </form>
         </Form>
@@ -234,8 +228,7 @@ export default function ServiceDetailPage() {
     </AlertDialogHeader>
 
     <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction type="submit" form="yourFormId">Continue</AlertDialogAction>
+      <AlertDialogCancel className="w-full" >Cancel</AlertDialogCancel>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>
