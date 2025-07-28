@@ -46,6 +46,16 @@ export interface LinkGroupProp{
 }
 
 
+export interface BookType{
+    username : string,
+    number : string,
+    place : string,
+    scheduledDate : string,
+    scheduledTime : string,
+    service : string,
+    commands? : string | null,
+    created_at? : string | null
+}
 
 
 

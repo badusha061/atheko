@@ -30,6 +30,10 @@ import {
 import { Input } from "@/components/ui/input"
 import libphonenumber from "google-libphonenumber"; 
 import { CalendarField } from "@/components/calender/calender-field";
+import { Textarea } from "@/components/ui/textarea"
+import { BookType } from "@/types/type";
+import axios from "axios"
+import {  toast } from 'sonner';
 
 
 const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
@@ -63,6 +67,7 @@ const formSchema = z.object({
     .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
       message: "Time must be in HH:mm format",
     }),
+  commands : z.string()
       
 })
 
@@ -94,11 +99,47 @@ export default function ServiceDetailPage() {
       defaultValues: {
         username: "",
       },
+      mode: "onTouched"
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    const {isSubmitting} = form.formState
+    
+
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const sheduleDate = values.scheduledDate 
+        const currentDate = new Date()
+        if(sheduleDate > currentDate){
+            const payload = {
+              "username":values.username,
+              "number":values.number,
+              "place":values.place,
+              "scheduledDate":values.scheduledDate,
+              "scheduledTime":values.scheduledTime,
+              "service":service?._id
+            } 
+            console.log("the payload",payload);
+            try{
+                  const response = await axios.post(`/api/booking/`,JSON.stringify(payload),{headers: {'Content-Type': 'application/json'}}); 
+                if(response.status == 201){
+                      toast.success("Thank you! Your service has been scheduled successfully. We’ll get back to you shortly.");
+                  }else{
+                      toast.error(response.data.message);
+                  }
+              }catch (error : unknown){
+                console.log("the error",error);
+                if(error instanceof Error){
+                    toast.error(error.message);
+                }else{
+                    toast.error("Something Went Wrong Please Try Again.")                            
+                }
+              }
+
+        }else{
+          console.log("not future ====")
+        }
     }
+
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-5 md:p-10">
@@ -206,6 +247,21 @@ export default function ServiceDetailPage() {
                         <FormLabel>Schedule Time</FormLabel>
                         <FormControl>
                           <Input type="time" placeholder="eg: 12:00 AM" {...field} />
+                        </FormControl>
+                        <FormDescription>This is your place of residence.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}  
+                  />
+
+                   <FormField
+                    control={form.control}
+                    name="commands"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Commands</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="You have something to us."  {...field} />
                         </FormControl>
                         <FormDescription>This is your place of residence.</FormDescription>
                         <FormMessage />
