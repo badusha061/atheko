@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { ServiceUI } from "@/types/type";
 import {
   AlertDialog,
@@ -74,6 +74,7 @@ const formSchema = z.object({
 
 
 export default function ServiceDetailPage() {
+    const [open , setOpen] = useState(false)
     const relatedServices = [
       { id: 1, title: "Service 1" },
       { id: 2, title: "Service 2" },
@@ -123,7 +124,14 @@ export default function ServiceDetailPage() {
                   const response = await axios.post(`/api/booking/`,JSON.stringify(payload),{headers: {'Content-Type': 'application/json'}}); 
                 if(response.status == 201){
                     toast.success("Thank you! Your service has been scheduled successfully. We’ll get back to you shortly.");
-                    form.reset()
+                    form.reset({
+                      username:"",
+                      place:"",
+                      number:"",
+                      scheduledTime:"",
+                      commands:"",
+                    })
+                    setOpen(false)
                   }else{
                       toast.error(response.data.message);
                   }
@@ -150,145 +158,145 @@ export default function ServiceDetailPage() {
             fill
             className="rounded-2xl object-cover"
           />
-         <AlertDialog>
-    <AlertDialogTrigger asChild>
-      <Button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-blue-600 transition duration-200">
-        Schedule Pick Up
-      </Button>
-    </AlertDialogTrigger>
+         <AlertDialog open={open} onOpenChange={setOpen} >
+        <AlertDialogTrigger asChild>
+          <Button onClick={() => setOpen(true)} className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-blue-600 transition duration-200">
+            Schedule Pick Up
+          </Button>
+        </AlertDialogTrigger>
 
-  <AlertDialogContent className="max-h-[80vh] overflow-y-auto" >
-    <AlertDialogHeader>
-      <div  className=" flex  justify-between" >
-        <AlertDialogTitle>
-          Schedule Your Appointment 
-        </AlertDialogTitle>
-          <Image 
-            src={"/core/Atheko-1.svg"}
-            alt="About Us"
-            width={75}
-            height={75}
-            className="rounded-md transition-transform duration-300 hover:scale-105"
-            />
-      </div>
-      <AlertDialogDescription>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Username</FormLabel>
-                        <FormControl>
-                          <Input placeholder="John" {...field} />
-                        </FormControl>
-                        <FormDescription>
-                          This is your public display name.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+        <AlertDialogContent  className="max-h-[80vh] overflow-y-auto" >
+          <AlertDialogHeader>
+            <div  className=" flex  justify-between" >
+              <AlertDialogTitle>
+                Schedule Your Appointment 
+              </AlertDialogTitle>
+                <Image 
+                  src={"/core/Atheko-1.svg"}
+                  alt="About Us"
+                  width={75}
+                  height={75}
+                  className="rounded-md transition-transform duration-300 hover:scale-105"
                   />
-
-                  <FormField
-                    control={form.control}
-                    name="number"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="+971-XX-1234567"
-                            className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>This is your public Phone Number.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="place"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Place</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Kozhikode" {...field} />
-                        </FormControl>
-                        <FormDescription>This is your place of residence.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}  
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="scheduledDate"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <CalendarField value={field.value} onChange={field.onChange} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="scheduledTime"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Schedule Time</FormLabel>
-                        <FormControl>
-                          <Input type="time" placeholder="eg: 12:00 AM" {...field} />
-                        </FormControl>
-                        <FormDescription>This is your place of residence.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}  
-                  />
-
-                   <FormField
-                    control={form.control}
-                    name="commands"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Commands</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="You have something to us."  {...field} />
-                        </FormControl>
-                        <FormDescription>This is your place of residence.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}  
-                  />
-
-
-
-            <div className="flex justify-end">
-              <Button type="submit" className={`w-full px-6 hover:cursor-pointer py-3 mt-4 text-sm  tracking-wide text-white capitalize transition-colors duration-300 transform bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`}>
-                    {isSubmitting ? 
-                        <Button className={`w-full  bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`} disabled>
-                            < Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Please wait
-                        </Button>
-                    : "Schedule Service"}
-                </Button>
             </div>
-          </form>
-        </Form>
-      </AlertDialogDescription>
-    </AlertDialogHeader>
+            <AlertDialogDescription>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <FormField
+                          control={form.control}
+                          name="username"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Username</FormLabel>
+                              <FormControl>
+                                <Input placeholder="John" {...field} />
+                              </FormControl>
+                              <FormDescription>
+                                This is your public display name.
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-    <AlertDialogFooter>
-      <AlertDialogCancel className="w-full" >Cancel</AlertDialogCancel>
-    </AlertDialogFooter>
-  </AlertDialogContent>
+                        <FormField
+                          control={form.control}
+                          name="number"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Phone Number</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="+971-XX-1234567"
+                                  className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormDescription>This is your public Phone Number.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="place"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Place</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Kozhikode" {...field} />
+                              </FormControl>
+                              <FormDescription>This is your place of residence.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}  
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="scheduledDate"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <CalendarField value={field.value} onChange={field.onChange} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="scheduledTime"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Schedule Time</FormLabel>
+                              <FormControl>
+                                <Input type="time" placeholder="eg: 12:00 AM" {...field} />
+                              </FormControl>
+                              <FormDescription>This is your place of residence.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}  
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="commands"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Commands</FormLabel>
+                              <FormControl>
+                                <Textarea placeholder="You have something to us."  {...field} />
+                              </FormControl>
+                              <FormDescription>This is your place of residence.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}  
+                        />
+
+
+
+                  <div className="flex justify-end">
+                    <Button type="submit" className={`w-full px-6 hover:cursor-pointer py-3 mt-4 text-sm  tracking-wide text-white capitalize transition-colors duration-300 transform bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`}>
+                          {isSubmitting ? 
+                              <Button className={`w-full  bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`} disabled>
+                                  < Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                  Please wait
+                              </Button>
+                          : "Schedule Service"}
+                      </Button>
+                  </div>
+                </form>
+              </Form>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel className="w-full" >Cancel</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
 </AlertDialog>
 
         </div>
