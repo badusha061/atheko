@@ -31,9 +31,9 @@ import { Input } from "@/components/ui/input"
 import libphonenumber from "google-libphonenumber"; 
 import { CalendarField } from "@/components/calender/calender-field";
 import { Textarea } from "@/components/ui/textarea"
-import { BookType } from "@/types/type";
 import axios from "axios"
 import {  toast } from 'sonner';
+import { Loader2 } from "lucide-react"
 
 
 const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
@@ -116,27 +116,26 @@ export default function ServiceDetailPage() {
               "place":values.place,
               "scheduledDate":values.scheduledDate,
               "scheduledTime":values.scheduledTime,
+              "commands":values.commands,
               "service":service?._id
             } 
-            console.log("the payload",payload);
             try{
                   const response = await axios.post(`/api/booking/`,JSON.stringify(payload),{headers: {'Content-Type': 'application/json'}}); 
                 if(response.status == 201){
-                      toast.success("Thank you! Your service has been scheduled successfully. We’ll get back to you shortly.");
+                    toast.success("Thank you! Your service has been scheduled successfully. We’ll get back to you shortly.");
+                    form.reset()
                   }else{
                       toast.error(response.data.message);
                   }
               }catch (error : unknown){
-                console.log("the error",error);
                 if(error instanceof Error){
                     toast.error(error.message);
                 }else{
                     toast.error("Something Went Wrong Please Try Again.")                            
                 }
               }
-
         }else{
-          console.log("not future ====")
+          toast.error("Please select a valid future date. Scheduling a service for today or a past date is not allowed.")  
         }
     }
 
@@ -269,14 +268,17 @@ export default function ServiceDetailPage() {
                     )}  
                   />
 
-                  
-
-
-
 
 
             <div className="flex justify-end">
-              <Button className="w-full" type="submit">Submit</Button>
+              <Button type="submit" className={`w-full px-6 hover:cursor-pointer py-3 mt-4 text-sm  tracking-wide text-white capitalize transition-colors duration-300 transform bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`}>
+                    {isSubmitting ? 
+                        <Button className={`w-full  bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`} disabled>
+                            < Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Please wait
+                        </Button>
+                    : "Schedule Service"}
+                </Button>
             </div>
           </form>
         </Form>
