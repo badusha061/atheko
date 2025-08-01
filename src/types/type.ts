@@ -47,6 +47,7 @@ export interface LinkGroupProp{
 
 
 export interface BookType{
+    _id?: string,
     username : string,
     number : string,
     place : string,
@@ -56,6 +57,8 @@ export interface BookType{
     commands? : string | null,
     created_at? : string | null
 }
+
+
 
 
 

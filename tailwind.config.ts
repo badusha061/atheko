@@ -10,6 +10,11 @@ export default {
   theme: {
     extend: {
       colors: {
+        primaryStart: '#5116E3',
+        primaryEnd: '#BA00FF',
+         backgroundImage: {
+          'gradient-custom': 'linear-gradient(to right, #5116E3, #BA00FF)',
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

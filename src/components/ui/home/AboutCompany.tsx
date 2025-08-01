@@ -1,5 +1,13 @@
 import React from "react";
 import TitleSection from "./widgets/CommonTitle";
+import {  Inter} from 'next/font/google';
+
+
+
+const inter = Inter({
+    subsets: ['latin'],
+    weight: ['400', '500'], 
+    });
 
 export default function AboutCompany() {
   return (
@@ -23,19 +31,19 @@ export default function AboutCompany() {
         </div>
 
         {/* Main Subtitle */}
-        <h2 className="mt-10 text-2xl md:text-3xl font-semibold text-black">
-          Choose <span className="text-blue-600">The Best</span> Premium Laundry
+        <h2 className={`${inter.className} mt-10 text-2xl md:text-3xl font-semibold text-black`}>
+          Choose <span className="bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent">The Best</span> Premium Laundry
           Service
         </h2>
 
         {/* Description */}
-        <p className="mt-10 md:mt-32 max-w-6xl text-xl md:text-3xl text-gray-800 mx-auto tracking-wider leading-relaxed">
+        <p className={`${inter.className} mt-10 md:mt-32 max-w-6xl text-xl md:text-3xl text-gray-800 mx-auto tracking-wider leading-relaxed`}>
           <span className="leading-relaxed">
             Say goodbye to laundry day worries and hello to effortless care with
           </span>
           <span className="block whitespace-nowrap"></span>
           <span className="leading-relaxed">
-            <span className="text-blue-600 font-bold">
+            <span className="bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent font-bold">
               {" "}
               ATHEKO Premium Laundry
             </span>

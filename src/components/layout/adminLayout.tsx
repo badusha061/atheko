@@ -6,13 +6,12 @@ import AdminNavbarPage from "../adminNavbar"
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen  w-full overflow-hidden">
+      <div className="flex min-h-screen ">
         <AppSidebar />
           <SidebarTrigger />
-        <div className="flex-1 flex flex-col w-full overflow-hidden">
+        <div className="flex-1 flex flex-col">
           <AdminNavbarPage />
-
-          <main className="flex-1 w-full p-4 overflow-hidden">
+          <main className="flex-1 w-full p-4 ">
             {children}
           </main>
         </div>

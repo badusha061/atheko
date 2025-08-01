@@ -188,23 +188,34 @@ export async function POST(request:NextRequest) {
 
 
 
-export async function GET(){
-    try{
-        const bookings = await Booking.find()
-        return NextResponse.json({
-            data:bookings
-        },{
-            status:200
-        })
-    }catch (err : unknown){
-        const error  = err as Error
-        return NextResponse.json({
-            message:error.message
-        },{
-            status:500
-        })
-    }
+export async function GET() {
+  try {
+    const bookings = await Booking.find();
+
+    const final_data = await Promise.all(
+      bookings.map(async (booking) => {
+        const service = await Service.findOne({ _id: booking.services });
+
+        return {
+          ...booking.toObject(), 
+          service: service?.serviceName || "Unknown Service", 
+        };
+      })
+    );
+
+    return NextResponse.json(
+      { data: final_data },
+      { status: 200 }
+    );
+  } catch (err: unknown) {
+    const error = err as Error;
+    return NextResponse.json(
+      { message: error.message },
+      { status: 500 }
+    );
+  }
 }
+
 
 
 

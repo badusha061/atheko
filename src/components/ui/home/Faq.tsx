@@ -2,6 +2,16 @@
 import React, { useState } from "react";
 import Carousel from "./widgets/Carosel";
 
+import {  Inter} from 'next/font/google';
+
+
+
+const inter = Inter({
+    subsets: ['latin'],
+    weight: ['400', '500'], 
+    });
+
+
 interface FAQ {
   question: string;
   answer: string;
@@ -68,8 +78,8 @@ export default function Faq() {
 
         {/* Content */}
         <div className="relative z-10">
-          <p className="text-2xl sm:text-3xl lg:text-4xl font-bold max-w-md">
-            Frequently Asked <span className="text-blue-600">Questions</span>
+          <p className={`${inter.className} text-2xl sm:text-3xl lg:text-4xl font-bold max-w-md`}>
+            Frequently Asked <span className={`bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent`}>Questions</span>
           </p>
 
           {/* FAQ Questions and Answers */}
@@ -80,7 +90,7 @@ export default function Faq() {
                   className="flex justify-between items-center cursor-pointer"
                   onClick={() => toggleAnswerVisibility(index)}
                 >
-                  <h3 className="text-sm sm:text-lg font-semibold">
+                  <h3 className={`${inter.className} text-sm sm:text-lg font-semibold`}>
                     {faq.question}
                   </h3>
                   <button
@@ -91,7 +101,7 @@ export default function Faq() {
                   </button>
                 </div>
                 {visibleIndexes.includes(index) && (
-                  <p className="text-sm sm:text-base text-gray-700 mt-2">
+                  <p className={`${inter.className} text-sm sm:text-base text-gray-700 mt-2`}>
                     {faq.answer}
                   </p>
                 )}

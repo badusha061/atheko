@@ -2,6 +2,17 @@
 
 import React, { useState } from "react";
 
+
+import {  Inter} from 'next/font/google';
+
+
+
+const inter = Inter({
+    subsets: ['latin'],
+    weight: ['400', '500'], 
+    });
+
+
 export default function CustomerSay() {
   const reviews = [
     "With 3 kids at home, I always have my hands full. One less thing to worry about has been my laundry service. From baby bedding to my designer sarees polishing, everything gets picked up and delivered perfectly. Now laundry takes all of a minute - that's the time to book a pickup with Laundrology.",
@@ -39,13 +50,13 @@ export default function CustomerSay() {
       {/* Content */}
       <div className="flex flex-col items-center justify-start h-full z-10 mt-10 md:mt-14">
         {/* Heading */}
-        <h1 className="text-2xl md:text-4xl font-bold text-gray-400 text-center z-10">
-          WHAT <span className="text-blue-600">OUR</span> CUSTOMERS SAY
+        <h1 className={`${inter.className} text-2xl md:text-4xl font-bold text-gray-400 text-center z-10`}>
+          WHAT <span className="bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent">OUR</span> CUSTOMERS SAY
         </h1>
 
         {/* Subtitle */}
         <div className="flex flex-col items-center justify-center mt-4 md:mt-6 h-auto px-4">
-          <p className="text-lg md:text-2xl text-black font-medium max-w-2xl md:max-w-5xl text-center mb-6 md:mb-8">
+          <p className={`${inter.className} text-lg md:text-2xl text-black font-medium max-w-2xl md:max-w-5xl text-center mb-6 md:mb-8`}>
             We earn our customer loyalty by providing services that meet and
             exceed expectations and here&apos;s what a few of our valuable
             patrons have to say.
@@ -56,7 +67,7 @@ export default function CustomerSay() {
             {/* Left Button */}
             <button
               onClick={handlePrevious}
-              className="absolute left-4 md:left-0 text-xl md:text-3xl font-bold text-blue-600 p-2 md:p-4 rounded-full hover:bg-blue-100"
+              className="absolute left-4 md:left-0 text-xl md:text-3xl font-bold bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent p-2 md:p-4 rounded-full hover:bg-blue-100"
               aria-label="Previous"
             >
               &#8592;
@@ -64,7 +75,7 @@ export default function CustomerSay() {
 
             {/* Review Text */}
             <div className="flex-1 text-center px-4 md:px-8">
-              <p className="text-base md:text-xl text-black">
+              <p className={`${inter.className} text-base md:text-xl text-black`}>
                 {reviews[currentIndex]}
               </p>
             </div>
@@ -72,7 +83,7 @@ export default function CustomerSay() {
             {/* Right Button */}
             <button
               onClick={handleNext}
-              className="absolute right-4 md:right-0 text-xl md:text-3xl font-bold text-blue-600 p-2 md:p-4 rounded-full hover:bg-blue-100"
+              className="absolute right-4 md:right-0 text-xl md:text-3xl font-bold bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent p-2 md:p-4 rounded-full hover:bg-blue-100"
               aria-label="Next"
             >
               &#8594;
