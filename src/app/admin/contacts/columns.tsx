@@ -79,7 +79,7 @@ export const columns = ({onDelete }: ContactColumnProps) : ColumnDef<Contact>[] 
       // const formattedDate = new Date(row.original.created_at).toUTCString(); 
       const newDate = dateFormat(row.original.created_at)
       return (
-        <div className="text-right font-medium">{newDate}</div>
+        <div className="font-medium">{newDate}</div>
       );
     }
   },

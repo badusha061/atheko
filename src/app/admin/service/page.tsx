@@ -74,11 +74,14 @@ export default  function AdminServicePage() {
           }
           const response = await axios.post(`/api/services/`,formData,{headers: {'Content-Type': 'multipart/form-data'}
           });
+          console.log("the response is the",response);
+          
           if(response.status === 201){
             const responseData = response.data 
             setData((prev) => [...prev , responseData['data']])
             setIsopen(false)    
             toast.success("Successfully added a new service")
+            
           }    
         }catch(error : unknown){ 
             if(error instanceof Error){

@@ -86,7 +86,10 @@ export async function POST(request:NextRequest) {
             const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
             const fileUriBanner = "data:" + mimeTypeBanner + ";" + encoding + "," + base64DataBanner;
             const response = await uploadToCloudinary(fileUri , serviceImage.name)
+            console.log("the response of upload",response);
+            
             const responseBanner = await uploadToCloudinary(fileUriBanner , serviceBanner.name)
+            console.log("the response of upload Banner",responseBanner);
             if (response instanceof  NextResponse){
                 const errorData = await response.json();
                 console.error("Upload failed:", errorData.message);

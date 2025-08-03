@@ -37,7 +37,7 @@ function AdminNavbarPage() {
 
   return (
 
-    <nav className="rounded-2xl mt-1  w-full bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] dark:bg-neutral-700 py-2 px-4 shadow-md">
+    <nav className=" rounded-2xl mt-1  w-full bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] dark:bg-neutral-700 py-2 px-4 shadow-md">
       <div className="flex justify-end items-center"> 
         <Avatar>
           <AvatarImage src={"/core/Atheko-2.svg"} />

@@ -7,6 +7,14 @@ import React, { useEffect, useState , CSSProperties  } from "react";
 import { ServiceUI } from "@/types/type";
 import axios from "axios";
 import { FadeLoader  } from "react-spinners";
+import {  Inter} from 'next/font/google';
+
+
+
+const inter = Inter({
+    subsets: ['latin'],
+    weight: ['400', '500'], 
+});
 
 
 
@@ -79,14 +87,14 @@ export default function Services() {
               : "justify-center"
           } items-center w-full mt-10`}
         >
-          <p className="text-xl md:text-3xl font-bold">Select Your Service</p>
+          <p className={`${inter.className} text-xl md:text-3xl font-bold bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent`}>Select Your Service</p>
           {visibleServices < services.length && (
             <button
               onClick={handleViewMore}
-              className=" flex justify-between gap-4 items-center text-blue-600 rounded-sm px-5 py-2 text-sm md:text-3xl font-bold hover:underline"
+              className={`${inter.className} flex justify-between gap-4 items-center bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent rounded-sm px-5 py-2 text-sm md:text-3xl font-bold hover:underline`}
             >
               View All 
-              <View />
+              <View color="black" />
             </button>
           )}
         </div>
@@ -106,7 +114,7 @@ export default function Services() {
                 alt={service.serviceName}
                 className="transition-transform duration-300 hover:scale-110"
               />
-              <p className="text-sm md:text-2xl font-bold text-center">
+              <p className={`${inter.className} text-sm md:text-2xl  font-base uppercase text-center`}>
                 {service.serviceName}
               </p>
             </div>
@@ -117,7 +125,7 @@ export default function Services() {
         {visibleServices < services.length && (
           <div className="flex flex-col w-full gap-10 mt-20">
             <div className="flex flex-row justify-between items-center w-full">
-              <p className="text-3xl md:text-5xl font-bold">
+              <p className={`${inter.className} text-3xl md:text-5xl font-bold`}>
                 LAUNCHING OFFERS!
               </p>
             </div>

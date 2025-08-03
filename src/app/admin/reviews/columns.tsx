@@ -29,11 +29,12 @@ export const getColumns = ({
     header: "Created At",
     cell: ({ row }) => {
       const formatedDate = dateFormat(row.getValue("created_at"))
-      return <div className="text-right font-medium">{formatedDate}</div>
+      return <div className="font-medium">{formatedDate}</div>
     },
   },
   {
     id: 'actions',
+    header: "Delete",
     cell: ({ row }) => {
       return (
         <Button

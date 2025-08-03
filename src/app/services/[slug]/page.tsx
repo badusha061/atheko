@@ -34,6 +34,14 @@ import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
 import {  toast } from 'sonner';
 import { Loader2 } from "lucide-react"
+import {  Inter} from 'next/font/google';
+
+
+
+const inter = Inter({
+    subsets: ['latin'],
+    weight: ['400', '500'], 
+    });
 
 
 const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
@@ -76,10 +84,10 @@ const formSchema = z.object({
 export default function ServiceDetailPage() {
     const [open , setOpen] = useState(false)
     const relatedServices = [
-      { id: 1, title: "Service 1" },
-      { id: 2, title: "Service 2" },
-      { id: 3, title: "Service 3" },
-      { id: 4, title: "Service 4" },
+      { id: 1, title: "PREMIUM LAUNDRY CARE" },
+      { id: 2, title: "Dry Cleaning" },
+      { id: 3, title: "Steam Ironing" },
+      { id: 4, title: "Wash & Fold" },
     ];
 
     const searchParams = useSearchParams();
@@ -160,7 +168,7 @@ export default function ServiceDetailPage() {
           />
          <AlertDialog open={open} onOpenChange={setOpen} >
         <AlertDialogTrigger asChild>
-          <Button onClick={() => setOpen(true)} className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-blue-600 transition duration-200">
+          <Button onClick={() => setOpen(true)} className={`${inter.className} absolute uppercase bottom-4 left-1/2 transform -translate-x-1/2 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] transition duration-200`}>
             Schedule Pick Up
           </Button>
         </AlertDialogTrigger>
@@ -168,8 +176,8 @@ export default function ServiceDetailPage() {
         <AlertDialogContent  className="max-h-[80vh] overflow-y-auto" >
           <AlertDialogHeader>
             <div  className=" flex  justify-between" >
-              <AlertDialogTitle>
-                Schedule Your Appointment 
+              <AlertDialogTitle >
+                  Schedule Your Appointment 
               </AlertDialogTitle>
                 <Image 
                   src={"/core/Atheko-1.svg"}
@@ -304,10 +312,10 @@ export default function ServiceDetailPage() {
 
       {service ? (
         <div className="mt-5 md:mt-10 flex flex-col px-5 md:px-10">
-          <h2 className="text-2xl md:text-4xl font-bold">{service.serviceName}</h2>
-          <p className="mt-5 text-lg md:text-2xl">{service.serviceDescription}</p>
+          <h2 className={`${inter.className} text-2xl md:text-4xl font-bold uppercase bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent`}>{service.serviceName}</h2>
+          <p className={`${inter.className} mt-5 text-lg md:text-2xl`}>{service.serviceDescription}</p>
 
-          <h1 className="mt-5 text-xl text-blue-600 font-bold">
+          <h1 className={`${inter.className} mt-5 text-xl bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent font-bold`}>
             Cleaning Steps
           </h1>
           {service.servicePoints &&
@@ -315,7 +323,7 @@ export default function ServiceDetailPage() {
           service.servicePoints.length > 0 ? (
             <ul className="mt-5 list-disc list-inside">
               {service.servicePoints.map((point, index) => (
-                <li key={index} className="text-lg">
+                <li key={index} className={`${inter.className} text-lg`}>
                   {point}
                 </li>
               ))}
@@ -327,12 +335,12 @@ export default function ServiceDetailPage() {
           <div className="mt-10 flex flex-col md:flex-row w-full max-w-4xl justify-between">
             {/* Related Services */}
             <div className="mb-5 md:mb-0">
-              <h1 className="text-xl text-blue-600 font-bold">
+              <h1 className={`${inter.className} text-xl bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent font-bold`}>
                 Related Services
               </h1>
               <ul className="mt-5 list-disc list-inside">
                 {relatedServices.map((service, index) => (
-                  <li key={index} className="text-lg">
+                  <li key={index} className="text-lg uppercase">
                     {service.title}
                   </li>
                 ))}
@@ -341,10 +349,10 @@ export default function ServiceDetailPage() {
 
             {/* How Laundrology Works */}
             <div>
-              <h1 className="text-xl text-blue-600 font-bold">
+              <h1 className={`${inter.className} text-xl  font-bold bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent`}>
                 How Laundrology Works
               </h1>
-              <p className="mt-5 text-lg max-w-xl">
+              <p className={`${inter.className} mt-5 text-lg max-w-xl`}>
                 You can either schedule a pickup through our website or visit
                 our Laundrology Stores and get a special discount.
               </p>
