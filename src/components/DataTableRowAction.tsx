@@ -12,7 +12,7 @@ const DataTableRowActions = <TData,>({ row, onEdit, onDelete }: DataTableRowActi
   return (
     <div className=" flex gap-2  items-center hover: cursor-pointer " >
     <UserRoundPen onClick={ () => onEdit(row.original)} />
-      <Trash2 onClick={ () => onDelete(row.original)}   />
+      <Trash2 color='red' onClick={ () => onDelete(row.original)}   />
 </div>  
   );
 };

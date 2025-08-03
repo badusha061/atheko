@@ -1,10 +1,9 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { BookType } from "@/types/type"
+import { Review } from '@/types/type'
 import { Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
 
 
 function dateFormat(date : string){
@@ -15,47 +14,17 @@ function dateFormat(date : string){
 
 
 type DeleteHandlerProps = {
-  onDelete: (row : BookType) => void;
+  onDelete: (row : Review) => void;
 };
-
-
 
 export const getColumns = ({
   onDelete,
-}: DeleteHandlerProps): ColumnDef<BookType>[] => [
+}: DeleteHandlerProps): ColumnDef<Review>[] => [
   {
-    accessorKey: "username",
-    header: "Customer Name",
+    accessorKey: "reviewText",
+    header: "Customer Review",
   },
-  {
-    accessorKey: "number",
-    header: "Customer Number",
-  },
-  {
-    accessorKey: "place",
-    header: "Customer Place",
-  },
-  {
-    accessorKey: "scheduledDate",
-    header: "Schedule Date",
-    cell: ({ row }) => {
-      const formatedDate = dateFormat(row.getValue("scheduledDate"))
-      return <div className="text-right font-medium">{formatedDate}</div>
-    }
-  },
-  {
-    accessorKey: "scheduledTime",
-    header: "Schedule Time",
-  },
-  {
-    accessorKey: "service",
-    header: "Service",
-  },
-  {
-    accessorKey: "commands",
-    header: "Customer Commands",
-  },
-  {
+   {
     accessorKey: "created_at",
     header: "Created At",
     cell: ({ row }) => {
@@ -64,8 +33,7 @@ export const getColumns = ({
     },
   },
   {
-    accessorKey: "actions",
-    header: "Delete",
+    id: 'actions',
     cell: ({ row }) => {
       return (
         <Button
@@ -78,5 +46,4 @@ export const getColumns = ({
       );
     },
   },
-
-]
+];

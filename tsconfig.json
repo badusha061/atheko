@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "types": ["react", "node"],
+    "typeRoots": ["./node_modules/@types"],
     "target": "ES2017",
     "lib": [
       "dom",

@@ -33,6 +33,11 @@ interface ContactColumnProps{
   onDelete : (Service : Contact) => void;
 }
 
+function dateFormat(date : string){
+  const newDate = new Date(date)
+  return newDate.toDateString()
+
+}
 
 export const columns = ({onDelete }: ContactColumnProps) : ColumnDef<Contact>[] => [
   {
@@ -71,8 +76,11 @@ export const columns = ({onDelete }: ContactColumnProps) : ColumnDef<Contact>[] 
                     Creation Time
                   </div>,
     cell:({row}) => {
-      const formattedDate = new Date(row.original.created_at).toUTCString();
-      return formattedDate;
+      // const formattedDate = new Date(row.original.created_at).toUTCString(); 
+      const newDate = dateFormat(row.original.created_at)
+      return (
+        <div className="text-right font-medium">{newDate}</div>
+      );
     }
   },
   {

@@ -10,7 +10,7 @@ interface DataTableRowActionsContactProps<TData> {
 const DataTableRowActionsContact = <TData,>({ row,  onDelete }: DataTableRowActionsContactProps<TData>) => {
   return (
     <div className=" flex gap-2  items-center hover: cursor-pointer " >
-      <Trash2   onClick={ () => onDelete(row.original)}   />
+      <Trash2  color='red'  onClick={ () => onDelete(row.original)}   />
 </div>  
   );
 };

@@ -37,10 +37,10 @@ function AdminNavbarPage() {
 
   return (
 
-    <nav className="rounded-2xl mt-1  bg-[rgb(180,4,252)] dark:bg-neutral-700 py-2 px-4 shadow-md">
-      <div className="max-w-7xl mx-auto flex justify-end items-center"> 
+    <nav className="rounded-2xl mt-1  w-full bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] dark:bg-neutral-700 py-2 px-4 shadow-md">
+      <div className="flex justify-end items-center"> 
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src={"/core/Atheko-2.svg"} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <DropdownMenu>

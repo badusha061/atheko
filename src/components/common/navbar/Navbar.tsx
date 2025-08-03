@@ -89,14 +89,14 @@ export default function Navbar() {
             <a
               key={index}
               href={navItem.link}
-              className="text-lg font-medium text-center hover:text-blue-500 transition-colors duration-300 hover:scale-110"
+              className={`${inter.className} text-lg font-medium text-center hover:text-blue-500 transition-colors duration-300 hover:scale-110`}
               onClick={() => setIsMobileMenuOpen(false)} // Close menu on item click
             >
               {navItem.item}
             </a>
           ))}
-          <div className="p-3 bg-blue-400 rounded-3xl text-center cursor-pointer hover:bg-blue-500 transition transform hover:scale-105">
-            <h1 className="text-lg font-semibold text-white">Get Quote Now</h1>
+          <div className="p-3 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] rounded-3xl text-center cursor-pointer hover:bg-blue-500 transition transform hover:scale-105">
+            <h1 className={`${inter.className} text-lg font-semibold text-white`}>Get Quote Now</h1>
           </div>
         </section>
       )}

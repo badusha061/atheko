@@ -58,6 +58,12 @@ export interface BookType{
     created_at? : string | null
 }
 
+export type Review = {
+  _id: string
+  reviewText: number
+  created_at? : string
+}
+
 
 
 

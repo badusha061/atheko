@@ -5,16 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 await ConnectMongodb()
 export async function POST(request:NextRequest) {
-    const check_rate = [1,2,3,4,5]
     try{
-        const{customerName , reviewTitle , reviewText , reviewRating} = await request.json()
-        if(!reviewTitle){
-            return NextResponse.json({
-                message:"Review Title is Required"
-            },{
-                status:400
-            })
-        }
+        const{ reviewText} = await request.json()
         if(!reviewText){
             return NextResponse.json({
                 message:"Review Text is Required"
@@ -22,24 +14,8 @@ export async function POST(request:NextRequest) {
                 status:400
             })
         }
-        if(!reviewRating){
-            return NextResponse.json({
-                message:"Review Rating is Required"
-            },{
-                status:400
-            })
-        }else if(!check_rate.includes(reviewRating)){
-            return NextResponse.json({
-                message:"Rating Number must be numaric 1,2,3,4,5"
-            },{
-                status:400
-            })
-        }
         const ReviewSchema = await new Review({
-            customerName,
-            reviewTitle,
-            reviewText,
-            reviewRating
+            reviewText
         })
         ReviewSchema.save()
         return NextResponse.json({
