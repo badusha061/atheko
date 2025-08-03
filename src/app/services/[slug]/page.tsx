@@ -176,7 +176,7 @@ export default function ServiceDetailPage() {
         <AlertDialogContent  className="max-h-[80vh] overflow-y-auto" >
           <AlertDialogHeader>
             <div  className=" flex  justify-between" >
-              <AlertDialogTitle >
+              <AlertDialogTitle className={`${inter.className} uppercase bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent`} >
                   Schedule Your Appointment 
               </AlertDialogTitle>
                 <Image 
@@ -195,11 +195,11 @@ export default function ServiceDetailPage() {
                           name="username"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Username</FormLabel>
+                              <FormLabel className={`${inter.className} text-black`} >Username</FormLabel>
                               <FormControl>
-                                <Input placeholder="John" {...field} />
+                                <Input  placeholder="John" {...field} />
                               </FormControl>
-                              <FormDescription>
+                              <FormDescription className={`${inter.className} text-black`}>
                                 This is your public display name.
                               </FormDescription>
                               <FormMessage />
@@ -212,7 +212,7 @@ export default function ServiceDetailPage() {
                           name="number"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Phone Number</FormLabel>
+                              <FormLabel className={`${inter.className} text-black`}  >Phone Number</FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="+971-XX-1234567"
@@ -220,7 +220,7 @@ export default function ServiceDetailPage() {
                                   {...field}
                                 />
                               </FormControl>
-                              <FormDescription>This is your public Phone Number.</FormDescription>
+                              <FormDescription className={`${inter.className} text-black`}  >This is your public Phone Number.</FormDescription>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -231,11 +231,11 @@ export default function ServiceDetailPage() {
                           name="place"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Place</FormLabel>
+                              <FormLabel  className={`${inter.className} text-black`} >Place</FormLabel>
                               <FormControl>
                                 <Input placeholder="Kozhikode" {...field} />
                               </FormControl>
-                              <FormDescription>This is your place of residence.</FormDescription>
+                              <FormDescription className={`${inter.className} text-black`}  >This is your place of residence.</FormDescription>
                               <FormMessage />
                             </FormItem>
                           )}  
@@ -259,11 +259,11 @@ export default function ServiceDetailPage() {
                           name="scheduledTime"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Schedule Time</FormLabel>
+                              <FormLabel className={`${inter.className} text-black`}  >Schedule Time</FormLabel>
                               <FormControl>
                                 <Input type="time" placeholder="eg: 12:00 AM" {...field} />
                               </FormControl>
-                              <FormDescription>This is your place of residence.</FormDescription>
+                              <FormDescription className={`${inter.className} text-black`} >This is your place of residence.</FormDescription>
                               <FormMessage />
                             </FormItem>
                           )}  
@@ -274,11 +274,11 @@ export default function ServiceDetailPage() {
                           name="commands"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Commands</FormLabel>
+                              <FormLabel className={`${inter.className} text-black`} >Commands</FormLabel>
                               <FormControl>
                                 <Textarea placeholder="You have something to us."  {...field} />
                               </FormControl>
-                              <FormDescription>This is your place of residence.</FormDescription>
+                              <FormDescription className={`${inter.className} text-black`} >This is your place of residence.</FormDescription>
                               <FormMessage />
                             </FormItem>
                           )}  
@@ -287,13 +287,13 @@ export default function ServiceDetailPage() {
 
 
                   <div className="flex justify-end">
-                    <Button type="submit" className={`w-full px-6 hover:cursor-pointer py-3 mt-4 text-sm  tracking-wide text-white capitalize transition-colors duration-300 transform bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`}>
+                    <Button type="submit" className={`w-full  px-6 hover:cursor-pointer py-3 mt-4 text-sm  tracking-wide text-white capitalize transition-colors duration-300 transform bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] rounded-lg hover:bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`}>
                           {isSubmitting ? 
-                              <Button className={`w-full  bg-[rgb(8,116,156)] rounded-lg hover:bg-[rgb(8,116,156)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`} disabled>
+                              <Button className={`w-full uppercase  bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] rounded-lg hover:bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`} disabled>
                                   < Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                   Please wait
                               </Button>
-                          : "Schedule Service"}
+                          : "SCHEDULE SERVICE"}
                       </Button>
                   </div>
                 </form>
@@ -302,7 +302,7 @@ export default function ServiceDetailPage() {
           </AlertDialogHeader>
 
           <AlertDialogFooter>
-            <AlertDialogCancel className="w-full" >Cancel</AlertDialogCancel>
+            <AlertDialogCancel className={`${inter.className} w-full  shadow-2xl uppercase`} >Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
 </AlertDialog>
