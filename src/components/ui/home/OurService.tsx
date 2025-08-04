@@ -45,31 +45,34 @@ export default function OurService() {
         </div>
 
         {/* Our Services */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
-          {services.map((service, index) => {
-            if (index >= 4) return null;
-            return (
-              <div
-                key={index}
-                className="relative flex flex-col items-center group"
-                  >
-                <div className=" md:h-[8rem] md:w-[8rem]   gap-3  border border-blue-600 rounded-[2rem] overflow-hidden relative shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                    <Image
-                      alt={service.serviceName}
-                      src={service.serviceImage?.url || ''}
-                      width={500}
-                      height={500}
-                      objectFit="cover"
-                      className="rounded-[2rem] object-cover "
-                    />
-                  </div>
-                <div className={`${inter.className} absolute left-1/2 transform -translate-x-1/2 bottom-[-1rem] text-white text-lg sm:text-xl font-bold bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] w-36 sm:w-44 h-8 sm:h-10 flex items-center justify-center rounded-3xl shadow-lg group-hover:scale-110 group-hover:bg-blue-700 transition duration-300`}>
-                  <h4>{service.serviceName}</h4>
-                </div>
-              </div>
-            );
-          })}
-        </section>
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4  gap-20 mt-10 px-4">
+        {services.slice(0, 4).map((service, index) => (
+          <div
+            key={index}
+            className="relative flex flex-col items-center group pb-8"
+          >
+            {/* Image Container */}
+            <div className="h-[10rem] w-[10rem]  border-blue-600 rounded-[2rem] overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+              <Image
+                alt={service.serviceName}
+                src={service.serviceImage?.url || ''}
+                width={500}
+                height={500}
+                objectFit="cover"
+                className="h-full w-full object-cover rounded-[2rem]"
+              />
+            </div>
+
+            {/* Service Label */}
+            <div
+              className={`${inter.className} absolute bottom-0 translate-y-[60%] text-white text-lg sm:text-xl font-sm uppercase w-auto bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)]   h-auto sm:w-44 sm:h-12 flex items-center justify-center rounded-3xl shadow-lg group-hover:scale-110 group-hover:bg-blue-700 transition duration-300`}
+            >
+              <h4>{service.serviceName}</h4>
+            </div>
+          </div>
+        ))}
+      </section>
+
 
       </div>
     </section>

@@ -14,6 +14,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+
+import {  Inter} from 'next/font/google';
+
+
+
+const inter = Inter({
+    subsets: ['latin'],
+    weight: ['400', '500'], 
+    });
+
 function formatDate(date: Date | undefined) {
   if (!date) return ""
   return date.toLocaleDateString("en-US", {
@@ -36,7 +46,7 @@ export function CalendarField({
 
   return (
     <div className="flex flex-col gap-3">
-      <Label htmlFor="date" className="px-1">
+      <Label htmlFor="date" className={`${inter.className} px-1 text-black`}>
         Schedule Date
       </Label>
       <div className="relative flex gap-2">
@@ -86,9 +96,9 @@ export function CalendarField({
           </PopoverContent>
         </Popover>
       </div>
-      <div className="text-muted-foreground px-1 text-sm">
+      <div className={`${inter.className} text-muted-foreground px-1 text-sm text-black`}>
         Your post will be published on{" "}
-        <span className="font-medium">{formatDate(value)}</span>.
+        <span className={`${inter.className} font-medium`}>{formatDate(value)}</span>.
       </div>
     </div>
   )
