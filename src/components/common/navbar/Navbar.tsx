@@ -66,7 +66,7 @@ export default function Navbar() {
           <div className="p-3 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)]  rounded-3xl cursor-pointer hover:bg-blue-500 transition transform hover:scale-105">
             <h1 className={` ${inter.className} text-xl font-semibold text-white`}>Get Quote Now</h1>
           </div>
-          <div className="p-3 bg-[#5116E3] rounded-full cursor-pointer hover:bg-blue-500 transition transform hover:scale-110">
+          <div className="p-3 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] rounded-full cursor-pointer hover:bg-blue-500 transition transform hover:scale-110">
             <MdCall className="text-white text-2xl" />
           </div>
         </section>
