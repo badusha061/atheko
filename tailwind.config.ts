@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -9,11 +10,14 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: "var(--font-made-tommy), sans-serif",
+      },
       colors: {
-        primaryStart: '#5116E3',
-        primaryEnd: '#BA00FF',
-         backgroundImage: {
-          'gradient-custom': 'linear-gradient(to right, #5116E3, #BA00FF)',
+        primaryStart: "#5116E3",
+        primaryEnd: "#BA00FF",
+        backgroundImage: {
+          "gradient-custom": "linear-gradient(to right, #5116E3, #BA00FF)",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -73,5 +77,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import ClientLayout from "@/components/common/ClientLayout";
 import WhatsAppIcon from "@/components/common/whatsapp/WhatsAppIcon";
-;
+import localFont from 'next/font/local';
 
+const madeTommyBold = localFont({
+  src: [
+    {
+      path: '/public/fonts/made/MADE TOMMY Bold_PERSONAL USE.otf',
+      weight: '700', 
+      style: 'normal',
+    },
+  ],
+  variable: '--font-made-tommy', 
+  display: 'swap', 
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,17 +38,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-  <html lang="en">
-    <head>
-      <link rel="icon" href="/favicon.ico" />
-    </head>
-    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <ClientLayout>
-        {children}
-        <WhatsAppIcon />
-      </ClientLayout>
-    </body>
-  </html>
-
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${madeTommyBold.variable} antialiased`}>
+        <ClientLayout>
+          {children}
+          <WhatsAppIcon />
+        </ClientLayout>
+      </body>
+    </html>
   );
 }

@@ -1,7 +1,7 @@
 'use client'
 import BoxReveal from "../../box-reveal";
 import { FiArrowUpRight } from "react-icons/fi";
-import {  Inter} from 'next/font/google';
+import {  Inter } from 'next/font/google';
 import { useRouter } from 'next/navigation'
 
 
@@ -9,6 +9,8 @@ const inter = Inter({
     subsets: ['latin'],
     weight: ['400', '500'], 
     });
+  
+
 
 export function BoxRevealDemo() {
   const router = useRouter()
@@ -18,7 +20,7 @@ export function BoxRevealDemo() {
   return (
     <div className="max-md:size-full max-w-lg items-center justify-center overflow-hidden max-md:pt-8 ">
       <BoxReveal boxColor={"#5046e6"} duration={0.5}>
-        <p className={` ${inter.className} text-5xl md:text-6xl lg:text-8xl font-bold mb-4 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent`}>
+        <p className={`text-5xl font-sans md:text-6xl lg:text-8xl font-bold mb-4 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent`}>
           Laundry Redefined<span className="text-[#BA00FF]">.</span>
         </p>
       </BoxReveal>

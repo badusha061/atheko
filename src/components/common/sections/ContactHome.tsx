@@ -87,6 +87,7 @@ function ContactHome() {
                     const response = await axios.post(`/api/contact/`,JSON.stringify(values),{headers: {'Content-Type': 'application/json'}}); 
                     if(response.status == 201){
                         toast.success("Thank you! Your message has been sent successfully. We’ll get back to you shortly.");
+                        form.reset()
                     }else{
                         toast.error(response.data.message);
                     }
