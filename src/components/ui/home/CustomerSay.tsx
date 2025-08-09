@@ -42,7 +42,7 @@ export default function CustomerSay() {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      className="relative flex flex-col items-center justify-between px-5 md:px-10 h-full py-36"
+      className="relative  mt-32 flex flex-col items-center justify-between px-5 md:px-10 h-full py-36"
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-white opacity-90"></div>
@@ -75,7 +75,7 @@ export default function CustomerSay() {
 
             {/* Review Text */}
             <div className="flex-1 text-center px-4 md:px-8">
-              <p className={`${inter.className} text-base md:text-xl text-black`}>
+              <p className={`${inter.className} text-base md:text-lg text-black`}>
                 {reviews[currentIndex]}
               </p>
             </div>

@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: "var(--font-made-tommy), sans-serif",
+        madeMummy: "var(--font-made-tommy), sans-serif",
       },
       colors: {
         primaryStart: "#5116E3",

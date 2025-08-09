@@ -37,50 +37,22 @@ export default function AboutCompany() {
         </h2>
 
         {/* Description */}
-        <p className={`${inter.className} mt-10 md:mt-32 max-w-6xl text-xl md:text-3xl text-gray-800 mx-auto tracking-wider leading-relaxed`}>
+        <p className={`${inter.className} mt-8 md:mt-18 max-w-6xl text-xl md:text-1xl text-gray-800 mx-auto tracking-wider leading-relaxed`}>
           <span className="leading-relaxed">
-            Say goodbye to laundry day worries and hello to effortless care with
+            We believe your clothes deserve more than just a wash, 
           </span>
           <span className="block whitespace-nowrap"></span>
           <span className="leading-relaxed">
             <span className="bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] bg-clip-text text-transparent font-bold">
               {" "}
-              ATHEKO Premium Laundry
+              ATHEKO Premium Laundry 
             </span>
-            , your trusted partner in premium garment care. We are committed to
-            providing a laundry experience
+            they deserve care, precision, and perfection. With world-class cleaning technology and expert fabric handling, we deliver garments that look, feel, and
           </span>
           <span className="leading-relaxed">
-            that saves you time, ensures pristine results, and delivers
-            unmatched convenience.
+             smell like new, every single time. We blend modern cleaning technology with eco-friendly care to give your clothes the love they deserve and you the time you deserve.
           </span>
         </p>
-      </div>
-
-      {/* Statistics Section */}
-      <div className="relative z-10 flex flex-wrap justify-between items-center mb-10 w-full max-w-5xl">
-        <div className="text-center flex-col items-center">
-          <h3 className="text-5xl font-bold text-gray-400">456</h3>
-          <p className="text-gray-600 ml-2">Happy Pickup</p>
-        </div>
-        <div className="h-20 border-l-2 border-gray-400 mx-4" />{" "}
-        {/* Vertical Line */}
-        <div className="text-center flex-col items-center">
-          <h3 className="text-5xl font-bold text-gray-400">186</h3>
-          <p className="text-gray-600 ml-2">Happy Clients</p>
-        </div>
-        <div className="h-20 border-l-2 border-gray-400 mx-4" />{" "}
-        {/* Vertical Line */}
-        <div className="text-center flex-col items-center">
-          <h3 className="text-5xl font-bold text-gray-400">32</h3>
-          <p className="text-gray-600 ml-2">Services</p>
-        </div>
-        <div className="h-20 border-l-2 border-gray-400 mx-4" />{" "}
-        {/* Vertical Line */}
-        <div className="text-center flex-col items-center">
-          <h3 className="text-5xl font-bold text-gray-400">2</h3>
-          <p className="text-gray-600 ml-2">Awards</p>
-        </div>
       </div>
     </section>
   );

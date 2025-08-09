@@ -36,7 +36,7 @@ export default function OurService() {
 
 
   return (
-    <section className="rrelative mt-[100px] flex flex-col items-center px-5 md:px-10 pb-20">
+    <section className="relative mt-[100px] flex flex-col items-center px-5 md:px-10 pb-20">
       {/* Content */}
       <div className="mt-10 text-center">
         {/* Main Title */}
@@ -52,20 +52,27 @@ export default function OurService() {
             className="relative flex flex-col items-center group pb-8"
           >
             {/* Image Container */}
-            <div className="h-[10rem] w-[10rem]  border-blue-600 rounded-[2rem] overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+            <div className="h-[10rem] w-[10rem] border-blue-600 rounded-[2rem] overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex items-center justify-center">
               <Image
                 alt={service.serviceName}
                 src={service.serviceImage?.url || ''}
-                width={500}
-                height={500}
-                objectFit="cover"
-                className="h-full w-full object-cover rounded-[2rem]"
+                width={110}
+                height={110}
+                className="object-cover"
               />
             </div>
 
+
             {/* Service Label */}
             <div
-              className={`${inter.className} absolute bottom-0 translate-y-[60%] text-white text-lg sm:text-xl font-sm uppercase w-auto bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)]   h-auto sm:w-44 sm:h-12 flex items-center justify-center rounded-3xl shadow-lg group-hover:scale-110 group-hover:bg-blue-700 transition duration-300`}
+                className={`${inter.className} 
+  sm:absolute sm:bottom-0 sm:translate-y-[60%] 
+  translate-y-0 relative mt-4
+  text-white text-lg sm:text-sm font-sm uppercase 
+  w-auto bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] 
+  h-auto sm:w-44 sm:h-12 flex items-center justify-center 
+  rounded-3xl shadow-lg group-hover:scale-110 
+  group-hover:bg-blue-700 transition duration-300`}
             >
               <h4>{service.serviceName}</h4>
             </div>

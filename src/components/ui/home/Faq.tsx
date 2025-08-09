@@ -27,23 +27,23 @@ export default function Faq() {
 
   const faqs: FAQ[] = [
     {
-      question: "What is your refund policy?",
-      answer: "We offer a 30-day money-back guarantee.",
+      question: "What makes Atheko Premium Laundry different from regular laundries?",
+      answer: "Atheko offers premium care for your clothes using advanced washing technology, eco-friendly detergents, and expert handling. We focus on quality, hygiene, and fabric safety, ensuring your garments look and feel like new.",
     },
     {
-      question: "How can I track my order?",
+      question: "Do you offer pickup and delivery services?",
       answer:
-        "You can track your order through the tracking link sent to your email.",
+        "Yes, we provide free* doorstep pickup and delivery within our service area. You can schedule it via call, WhatsApp, or online booking system.(*Free service available for orders above our minimum billing amount.)",
     },
     {
-      question: "Do you provide international shipping?",
+      question: "How long will it take to get my clothes cleaned?",
       answer:
-        "Yes, we ship to selected countries. Additional charges may apply.",
+        "Standard service takes 24–48 hours. For urgent needs, we have express service options with 150 minutes delivery at an additional charge.",
     },
     {
-      question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards, PayPal, and Apple Pay.",
-    },
+      question: "Can you handle delicate fabrics like silk or designer wear?",
+      answer: "Absolutely. We specialize in premium and delicate fabric care. Each garment is inspected and processed using the most suitable cleaning method to maintain its texture, colour, and shape.",
+    }
   ];
 
   // State to manage visibility of each answer

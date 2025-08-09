@@ -7,7 +7,7 @@ import localFont from 'next/font/local';
 const madeTommyBold = localFont({
   src: [
     {
-      path: '/public/fonts/made/MADE TOMMY Bold_PERSONAL USE.otf',
+      path: '../fonts/made/MADE Outer Sans Bold PERSONAL USE.otf',
       weight: '700', 
       style: 'normal',
     },

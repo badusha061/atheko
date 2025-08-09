@@ -168,7 +168,7 @@ export default function ServiceDetailPage() {
           />
          <AlertDialog open={open} onOpenChange={setOpen} >
         <AlertDialogTrigger asChild>
-          <Button onClick={() => setOpen(true)} className={`${inter.className} absolute uppercase bottom-4 left-1/2 transform -translate-x-1/2 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] transition duration-200`}>
+          <Button onClick={() => setOpen(true)} className={`${inter.className}  absolute uppercase   bottom-10 left-1/2 transform -translate-x-1/2 bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] font-bold text-white py-2 px-6 rounded-2xl shadow hover:bg-[linear-gradient(to_right,_#5116E3,_#BA00FF)] transition duration-200`}>
             Schedule Pick Up
           </Button>
         </AlertDialogTrigger>
